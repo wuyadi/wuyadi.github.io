@@ -2,12 +2,8 @@
 title: PHP中private、protected、public、final区别
 date: 2018-11-08 13:16:58
 tags: PHP-Interview-Best-Practices-in-China
-date: 2014-03-03 19:07:43
-comments: true
-categories: Blog
-tags: [Hexo]
 keywords: PHP,private,protected,public,final
-description: 生命在于折腾，又把博客折腾到Hexo了。给Hexo点赞。
+description: PHP中private、protected、public、final区别
 ---
 
 ## 变量与方法的关键字public,private,protected
