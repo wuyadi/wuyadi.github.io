@@ -1,7 +1,7 @@
 ---
 title: phpexcel性能瓶颈及其优化
 date: 2019-02-02 10:25:32
-tags:phpexcel,500,502,out of memory
+tags: phpexcel,500,502
 ---
 ## PHP导出excel常见报错
 ### 导出报错 Fatal error: Out of memory
