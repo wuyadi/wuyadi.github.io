@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>Gridea</title>
-    <updated>2021-02-08T06:37:23.066Z</updated>
+    <updated>2021-02-08T08:11:34.255Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
@@ -10,6 +10,38 @@
     <logo>https://wuyadi.github.io/images/avatar.png</logo>
     <icon>https://wuyadi.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[奇怪的bug]]></title>
+        <id>https://wuyadi.github.io/post/qi-guai-de-bug/</id>
+        <link href="https://wuyadi.github.io/post/qi-guai-de-bug/">
+        </link>
+        <updated>2020-07-23T06:43:58.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="前情">前情：</h3>
+<p>在更新了一个数据权限的模块之后，测试同学说有个权限的bug。在检查代码后，发现了罪魁祸首。</p>
+<h3 id="开始">开始：</h3>
+<pre><code class="language-php">$arr = array('name' =&gt; 'test', 'sex' =&gt; 'male','age' =&gt; 0);
+
+if(in_array('h232',$arr)) {
+
+​    ***
+
+} else {
+
+​    ***
+
+}
+</code></pre>
+<h3 id="分析">分析：</h3>
+<p>在[官网]: https://www.php.net/manual/zh/function.in-array.php</p>
+<p>对于in_array这个方法的解释为：in_array — 检查数组中是否存在某个值</p>
+<pre><code class="language-php">in_array ( mixed $needle , array $haystack , bool $strict = false ) : bool
+</code></pre>
+<p>所以in_array()函数的value值会与搜索的值比较，如果不加第三个参数，in_array()会把搜索的类型强制转换成和value值一样进行比较。</p>
+<p>所以，上面的搜索值 ‘h232’ 在和value = 0 进行比较的时候 ‘h234’强制转换成了number 0;</p>
+<h3 id="结论">结论：</h3>
+<p>在使用in_array方法时，尽量使用第三个参数，避免因为类型转换，导致奇怪的报障。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[从PHP到GO之导出数据]]></title>
         <id>https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/</id>
@@ -56,10 +88,30 @@
 			err = json.Unmarshal(jsonstring, &amp;source)
 </code></pre>
 <p>经测试导出数据20W条数据只需要10分钟</p>
+<h3 id="结论">结论：</h3>
+<p>在觉得做到的最优解的时候，换个思路，跳出僵化思维，或许会有意外的收获。</p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[phpexcel性能瓶颈及其优化]]></title>
+        <title type="html"><![CDATA[phpexcel性能瓶颈及其优化 II]]></title>
+        <id>https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/</id>
+        <link href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/">
+        </link>
+        <updated>2019-09-12T12:05:39.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="前情">前情：</h3>
+<p>前面简单的优化了导出的报错以及资源限制，这两天来复查的时候，发现我始终局限于使用ExcelUtil或者 <a href="https://phpspreadsheet.readthedocs.io/">PhpSpreadsheet</a> ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服务器的内存溢出。</p>
+<h3 id="开始">开始：</h3>
+<p>有网友推荐使用</p>
+<p>，有介绍说：<strong>Never run out of memory with PHPExcel again.</strong></p>
+<p>替换后，查看服务器资源占用，没有看到内存持续增长。</p>
+<h3 id="分析">分析：</h3>
+<p>XLSXWriter不是一直保存一个对象来进行增删改查，而是通过增量写文件的方式来进行excel的导出。所以不会随着导出的数据量增长，而占用更多的内存。</p>
+<h3 id="结论">结论：</h3>
+<p>在使用XLSXWriter替换导出组件之后，系统的导出时长完全受限于从数据库读取数据。这块就要从数据查询语句优化做起。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[phpexcel性能瓶颈及其优化 I]]></title>
         <id>https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/</id>
         <link href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/">
         </link>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>从PHP到GO之导出数据 | Gridea</title>
+<title>phpexcel性能瓶颈及其优化 II | Gridea</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -19,11 +19,8 @@
 
 
     <meta name="description" content="前情：
-生产环境有客户经常从ES中导出不同时段的数据，一天数据大概有12W，现有的php导出速度在优化之后一次导出耗时需要27-35分钟，所以有了这次优化。
-开始：
-HBASE + ES
-因为现在的主要耗时在于从es获取数据时的耗时比较久，..." />
-    <meta name="keywords" content="go,excel,性能,php" />
+前面简单的优化了导出的报错以及资源限制，这两天来复查的时候，发现我始终局限于使用ExcelUtil或者 PhpSpreadsheet ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服..." />
+    <meta name="keywords" content="XLSXWriter,excel,php" />
   </head>
   <body>
     <div id="app" class="main">
@@ -94,70 +91,34 @@ HBASE + ES
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">从PHP到GO之导出数据</h2>
-            <div class="post-date">2020-03-25</div>
+            <h2 class="post-title">phpexcel性能瓶颈及其优化 II</h2>
+            <div class="post-date">2019-09-12</div>
             
-              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/cong-php-dao-go-zhi-dao-chu-shu-ju.jpg')">
+              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii.jpg')">
               </div>
             
             <div class="post-content" v-pre>
               <h3 id="前情">前情：</h3>
-<p>生产环境有客户经常从ES中导出不同时段的数据，一天数据大概有12W，现有的php导出速度在优化之后一次导出耗时需要27-35分钟，所以有了这次优化。</p>
+<p>前面简单的优化了导出的报错以及资源限制，这两天来复查的时候，发现我始终局限于使用ExcelUtil或者 <a href="https://phpspreadsheet.readthedocs.io/">PhpSpreadsheet</a> ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服务器的内存溢出。</p>
 <h3 id="开始">开始：</h3>
-<h4 id="hbase-es">HBASE + ES</h4>
-<p>因为现在的主要耗时在于从es获取数据时的耗时比较久，首先尝试了，将相对大的数据字段存储到HBASE，然后每次查询都从es获取ID，再从HBASE获取文本的数据。经测试从ES + HBASE比单纯ES快，但是效果不显著，还是不能满足客户需要。</p>
-<h4 id="从php到golang">从PHP到Golang</h4>
-<p>在改造了存储结构没有好的结果的时候，从头理了一下整个流程。发现因为语言的限制php每次只有一个并发从ES取数据，那么我们使用高并发的语言GO来并发的从ES拿数据，速度应该会提升不少。选中了常用的go-for-es插件olivere/elastic.v5 。</p>
-<p>首先我们再main里面以10个<em>go</em>routine从ES拿数据。</p>
-<pre><code class="language-go">    count := 10
-	ch := make(chan bool, count)
-	for i := 0; i &lt; count; i++ {
-		go queryEs(ch, i)
-	}
-	for i := 0; i &lt; count; i++ {
-		&lt;-ch
-	}
-    sliceQuery := NewSliceQuery().Id(i).Max(10)
-	boolQ := elastic.NewBoolQuery()
-	boolQ.Must(elastic.NewMatchQuery(&quot;ai_status&quot;, 3))
-	boolQ.Filter(elastic.NewRangeQuery(&quot;create_time&quot;).Gt(1583337600))
-	boolQ.Filter(elastic.NewRangeQuery(&quot;create_time&quot;).Lt(1585151999))
-	svc := client.Scroll(&quot;index&quot;).Query(boolQ).Slice(sliceQuery).Size(800)
-</code></pre>
-<p>然后就是对数据的处理：</p>
-<pre><code class="language-go">    result, err := svc.Do(context.TODO())
-		if err == io.EOF {
-			break
-		}
-
-		if err != nil {
-			//fmt.Printf(err)
-			break
-		}
-
-		for _, r := range result.Hits.Hits {
-			jsonstring := *r.Source
-			var source Source
-			err = json.Unmarshal(jsonstring, &amp;source)
-</code></pre>
-<p>经测试导出数据20W条数据只需要10分钟</p>
+<p>有网友推荐使用</p>
+<p>，有介绍说：<strong>Never run out of memory with PHPExcel again.</strong></p>
+<p>替换后，查看服务器资源占用，没有看到内存持续增长。</p>
+<h3 id="分析">分析：</h3>
+<p>XLSXWriter不是一直保存一个对象来进行增删改查，而是通过增量写文件的方式来进行excel的导出。所以不会随着导出的数据量增长，而占用更多的内存。</p>
 <h3 id="结论">结论：</h3>
-<p>在觉得做到的最优解的时候，换个思路，跳出僵化思维，或许会有意外的收获。</p>
+<p>在使用XLSXWriter替换导出组件之后，系统的导出时长完全受限于从数据库读取数据。这块就要从数据查询语句优化做起。</p>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://wuyadi.github.io/tag/L0LTP3V10/" class="tag">
-                    go
+                  <a href="https://wuyadi.github.io/tag/Cgj5zKr2Y/" class="tag">
+                    XLSXWriter
                   </a>
                 
                   <a href="https://wuyadi.github.io/tag/vgdkEtpzM8/" class="tag">
                     excel
-                  </a>
-                
-                  <a href="https://wuyadi.github.io/tag/U6CteJZ65O/" class="tag">
-                    性能
                   </a>
                 
                   <a href="https://wuyadi.github.io/tag/3WTMsKTgK/" class="tag">
@@ -169,9 +130,9 @@ HBASE + ES
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/">
+                <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/">
                   <h3 class="post-title">
-                    phpexcel性能瓶颈及其优化 II
+                    phpexcel性能瓶颈及其优化 I
                   </h3>
                 </a>
               </div>

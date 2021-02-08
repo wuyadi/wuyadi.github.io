@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>phpexcel性能瓶颈及其优化 I | Gridea</title>
+<title>奇怪的bug | Gridea</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,10 +18,11 @@
 
 
 
-    <meta name="description" content="PHP导出excel常见报错
-导出报错 Fatal error: Out of memory
-Fatal error: Out of memory (allocated 1048576) (tried to allocate 393216 ..." />
-    <meta name="keywords" content="" />
+    <meta name="description" content="前情：
+在更新了一个数据权限的模块之后，测试同学说有个权限的bug。在检查代码后，发现了罪魁祸首。
+开始：
+$arr = array('name' =&gt; 'test', 'sex' =&gt; 'male','age' =&gt; 0..." />
+    <meta name="keywords" content="php,bug" />
   </head>
   <body>
     <div id="app" class="main">
@@ -92,42 +93,58 @@ Fatal error: Out of memory (allocated 1048576) (tried to allocate 393216 ..." />
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">phpexcel性能瓶颈及其优化 I</h2>
-            <div class="post-date">2019-02-02</div>
+            <h2 class="post-title">奇怪的bug</h2>
+            <div class="post-date">2020-07-23</div>
             
-              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/phpexcel-xing-neng-ping-jing-ji-qi-you-hua.jpg')">
+              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/qi-guai-de-bug.jpg')">
               </div>
             
             <div class="post-content" v-pre>
-              <h2 id="php导出excel常见报错">PHP导出excel常见报错</h2>
-<h3 id="导出报错-fatal-error-out-of-memory">导出报错 Fatal error: Out of memory</h3>
-<p>Fatal error: Out of memory (allocated 1048576) (tried to allocate 393216 bytes)<br>
-在程序中添加 ini_set(&quot;memory_limit&quot;,&quot;2080M&quot;);<br>
-或者直接修改php.ini中的memory_limit<br>
-memory_limit参数PHP可以占用的内存数，注意不要超过机器的实际内存。</p>
-<h3 id="导出报错-502bad-gateway">导出报错 502bad gateway</h3>
-<p>502是程序运行超时是nginx和php-fpm配置的问题。<br>
-一般我们设置一下php-fpm.conf中的request_terminate_timeout之后重启PHP-FPM和nginx服务就可以了。</p>
-<h3 id="导出报错-该网页无法正常运作-目前无法处理此请求-http-error-500">导出报错 该网页无法正常运作 目前无法处理此请求。HTTP ERROR 500</h3>
-<p>在测试环境下修改php.ini开启<br>
-display_errors = On<br>
-display_startup_errors = On<br>
-并重启服务，然后根据报错相应处理</p>
-<h2 id="由以上报错我们可以得出-php的性能瓶颈在于服务器性能当导出数量大于1w条的时候随着php使用服务器内存的增加导出速度在相应的下降">由以上报错我们可以得出 php的性能瓶颈在于服务器性能，当导出数量大于1W条的时候，随着PHP使用服务器内存的增加，导出速度在相应的下降。</h2>
-<h2 id="php导出excel的优化">PHP导出EXCEL的优化</h2>
-<h3 id="不要在写入excel的时候进行计算">不要在写入EXCEL的时候进行计算</h3>
-<h3 id="不要再大数据的时候设置单元格样式">不要再大数据的时候设置单元格样式</h3>
-<h3 id="分批次写入">分批次写入</h3>
-<h3 id="使用phpexcel_settingssetcachestoragemethod-降低程序对内存的消耗">使用PHPExcel_Settings::setCacheStorageMethod() 降低程序对内存的消耗</h3>
+              <h3 id="前情">前情：</h3>
+<p>在更新了一个数据权限的模块之后，测试同学说有个权限的bug。在检查代码后，发现了罪魁祸首。</p>
+<h3 id="开始">开始：</h3>
+<pre><code class="language-php">$arr = array('name' =&gt; 'test', 'sex' =&gt; 'male','age' =&gt; 0);
+
+if(in_array('h232',$arr)) {
+
+​    ***
+
+} else {
+
+​    ***
+
+}
+</code></pre>
+<h3 id="分析">分析：</h3>
+<p>在[官网]: https://www.php.net/manual/zh/function.in-array.php</p>
+<p>对于in_array这个方法的解释为：in_array — 检查数组中是否存在某个值</p>
+<pre><code class="language-php">in_array ( mixed $needle , array $haystack , bool $strict = false ) : bool
+</code></pre>
+<p>所以in_array()函数的value值会与搜索的值比较，如果不加第三个参数，in_array()会把搜索的类型强制转换成和value值一样进行比较。</p>
+<p>所以，上面的搜索值 ‘h232’ 在和value = 0 进行比较的时候 ‘h234’强制转换成了number 0;</p>
+<h3 id="结论">结论：</h3>
+<p>在使用in_array方法时，尽量使用第三个参数，避免因为类型转换，导致奇怪的报障。</p>
 
             </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://wuyadi.github.io/tag/3WTMsKTgK/" class="tag">
+                    php
+                  </a>
+                
+                  <a href="https://wuyadi.github.io/tag/zTuC-f5CwN/" class="tag">
+                    bug
+                  </a>
+                
+              </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://wuyadi.github.io/post/chou-xiang-lei-jie-kou-de-ding-yi-qu-bie-he-shi-yong-chang-jing/">
+                <a href="https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/">
                   <h3 class="post-title">
-                    抽象类、接口的定义、区别和使用场景
+                    从PHP到GO之导出数据
                   </h3>
                 </a>
               </div>
