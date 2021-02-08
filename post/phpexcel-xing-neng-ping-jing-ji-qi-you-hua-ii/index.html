@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" >
 
-<title>phpexcel性能瓶颈及其优化 II | Gridea</title>
+<title>phpexcel性能瓶颈及其优化 III | Gridea</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1612771219777">
+<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1612774401767">
 <link rel="stylesheet" href="https://wuyadi.github.io/styles/main.css">
 
 
@@ -19,7 +19,10 @@
 
 
     <meta name="description" content="前情：
-前面简单的优化了导出的报错以及资源限制，这两天来复查的时候，发现我始终局限于使用ExcelUtil或者 PhpSpreadsheet ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服..." />
+再回头复查的时候，发现我始终局限于使用ExcelUtil或者 PhpSpreadsheet ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服务器的内存溢出。
+开始：
+有网友推荐使用
+..." />
     <meta name="keywords" content="XLSXWriter,excel,php" />
   </head>
   <body>
@@ -29,7 +32,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://wuyadi.github.io">
-        <img src="https://wuyadi.github.io/images/avatar.png?v=1612771219777" class="site-logo">
+        <img src="https://wuyadi.github.io/images/avatar.png?v=1612774401767" class="site-logo">
         <h1 class="site-title">Gridea</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -91,15 +94,15 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">phpexcel性能瓶颈及其优化 II</h2>
-            <div class="post-date">2019-09-12</div>
+            <h2 class="post-title">phpexcel性能瓶颈及其优化 III</h2>
+            <div class="post-date">2020-03-22</div>
             
-              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii.jpg')">
+              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii.png')">
               </div>
             
             <div class="post-content" v-pre>
               <h3 id="前情">前情：</h3>
-<p>前面简单的优化了导出的报错以及资源限制，这两天来复查的时候，发现我始终局限于使用ExcelUtil或者 <a href="https://phpspreadsheet.readthedocs.io/">PhpSpreadsheet</a> ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服务器的内存溢出。</p>
+<p>再回头复查的时候，发现我始终局限于使用ExcelUtil或者 <a href="https://phpspreadsheet.readthedocs.io/">PhpSpreadsheet</a> ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服务器的内存溢出。</p>
 <h3 id="开始">开始：</h3>
 <p>有网友推荐使用</p>
 <p>，有介绍说：<strong>Never run out of memory with PHPExcel again.</strong></p>
@@ -130,9 +133,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/">
+                <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-i/">
                   <h3 class="post-title">
-                    phpexcel性能瓶颈及其优化 I
+                    phpexcel性能瓶颈及其优化 II
                   </h3>
                 </a>
               </div>

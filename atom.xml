@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>Gridea</title>
-    <updated>2021-02-08T08:11:34.255Z</updated>
+    <updated>2021-02-08T08:53:26.649Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
@@ -93,13 +93,13 @@ if(in_array('h232',$arr)) {
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[phpexcel性能瓶颈及其优化 II]]></title>
+        <title type="html"><![CDATA[phpexcel性能瓶颈及其优化 III]]></title>
         <id>https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/</id>
         <link href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/">
         </link>
-        <updated>2019-09-12T12:05:39.000Z</updated>
+        <updated>2020-03-22T12:05:39.000Z</updated>
         <content type="html"><![CDATA[<h3 id="前情">前情：</h3>
-<p>前面简单的优化了导出的报错以及资源限制，这两天来复查的时候，发现我始终局限于使用ExcelUtil或者 <a href="https://phpspreadsheet.readthedocs.io/">PhpSpreadsheet</a> ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服务器的内存溢出。</p>
+<p>再回头复查的时候，发现我始终局限于使用ExcelUtil或者 <a href="https://phpspreadsheet.readthedocs.io/">PhpSpreadsheet</a> ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服务器的内存溢出。</p>
 <h3 id="开始">开始：</h3>
 <p>有网友推荐使用</p>
 <p>，有介绍说：<strong>Never run out of memory with PHPExcel again.</strong></p>
@@ -108,6 +108,71 @@ if(in_array('h232',$arr)) {
 <p>XLSXWriter不是一直保存一个对象来进行增删改查，而是通过增量写文件的方式来进行excel的导出。所以不会随着导出的数据量增长，而占用更多的内存。</p>
 <h3 id="结论">结论：</h3>
 <p>在使用XLSXWriter替换导出组件之后，系统的导出时长完全受限于从数据库读取数据。这块就要从数据查询语句优化做起。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[phpexcel性能瓶颈及其优化 II]]></title>
+        <id>https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-i/</id>
+        <link href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-i/">
+        </link>
+        <updated>2019-07-11T12:46:04.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="前情"><strong>前情：</strong></h4>
+<p>前面简单的优化了导出的报错以及资源限制，这两天来复查的时候，发现导出数量达到1W的时候 ，导出速度就会越来越慢。简单的盘一下。</p>
+<h4 id="开始"><strong>开始：</strong></h4>
+<p>代码如下：</p>
+<pre><code class="language-php">if (!empty($param['tag_name'])) {
+            $targetModel = M(&quot;target_user_type&quot;);
+            $session_ids = $targetModel-&gt;where([
+                'tag_name' =&gt; $param['tag_name'],
+                'scene_id' =&gt; $param['scene_id']
+            ])-&gt;field(&quot;session_id&quot;)-&gt;select();
+            foreach ($session_ids as $keytemp=&gt;$valuetemp){
+                $session_arr[] = $valuetemp['session_id'];
+            }
+            if (count($session_arr) &gt; 0) {
+                $where['session_id'] = [&quot;in&quot;,$session_arr];
+            }else{
+                $this-&gt;myAjaxReturn(0, &quot;&quot;,[&quot;fieldList&quot;=&gt;[],&quot;dataList&quot;=&gt;[] , &quot;mapData&quot; =&gt; []],0);
+            }
+        }
+
+        $data = $this-&gt;getReportData($where,$param,$session_arr,false , true);
+</code></pre>
+<h4 id="分析"><strong>分析：</strong></h4>
+<p>由上述代码得知拿到查询条件之后，根据条件一次性获取所有导出数据。这样会引起两个问题：</p>
+<ul>
+<li>由php本身的垃圾回收机制导致的大数组处理占用内存飙升</li>
+<li>一次性获取大量数据会导致mysql卡顿</li>
+</ul>
+<h4 id="问题解决">问题解决</h4>
+<pre><code class="language-php">if (!empty($param['tag_name'])) {
+            $targetModel = M(&quot;target_user_type&quot;);
+            $session_arr = $targetModel-&gt;where([
+                'tag_name' =&gt; $param['tag_name'],
+                'scene_id' =&gt; $param['scene_id']
+            ])-&gt;where($swhere)-&gt;getField('session_id',true);
+            if (count($session_arr) &lt; 1) {
+                $this-&gt;myAjaxReturn(0, &quot;&quot;,[&quot;fieldList&quot;=&gt;[],&quot;dataList&quot;=&gt;[] , &quot;mapData&quot; =&gt; []],0);
+            }
+        }else{
+            $robotModel = intval($param['type']) == 1? M('robot_chat_converge_call_in'):M('robot_chat_converge');
+            $session_arr = $robotModel-&gt;where($where)-&gt;order('id desc')-&gt;getField('session_id',true);
+        }
+        if(isset($where['add_time'])){
+            unset($where['add_time']);
+        }
+        $totalData = 0;
+        $writer = new \Home\Util\XLSXWriter();
+        $sheet_name = &quot;Sheet1&quot;;
+        if(isset($session_arr) &amp;&amp; count($session_arr)&gt;0){
+            $new_array = array_chunk($session_arr,500);
+            foreach ($new_array as $nkey =&gt; $val) {
+                unset($exportData);
+                $exportData = [];
+                $where['session_id'] = [&quot;in&quot;,$val];
+                $data = $this-&gt;getReportData($where,$param,$session_arr,false , true);
+</code></pre>
+<p>上述代码首先获取了全部的session_id 数组，然后分批获取导出数据，再执行导出。在导出一批数据之后unset掉临时数组减少内存占用，提升导出速度。</p>
 ]]></content>
     </entry>
     <entry>

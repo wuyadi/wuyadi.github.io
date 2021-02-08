@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>phpexcel性能瓶颈及其优化 II | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1612774401767">
+<link rel="stylesheet" href="https://wuyadi.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="前情：
+前面简单的优化了导出的报错以及资源限制，这两天来复查的时候，发现导出数量达到1W的时候 ，导出速度就会越来越慢。简单的盘一下。
+开始：
+代码如下：
+if (!empty($param['tag_name'])) {
+        ..." />
+    <meta name="keywords" content="excel,性能,php" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wuyadi.github.io">
+        <img src="https://wuyadi.github.io/images/avatar.png?v=1612774401767" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      知耻近乎勇
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://wuyadi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">phpexcel性能瓶颈及其优化 II</h2>
+            <div class="post-date">2019-07-11</div>
+            
+              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-i.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h4 id="前情"><strong>前情：</strong></h4>
+<p>前面简单的优化了导出的报错以及资源限制，这两天来复查的时候，发现导出数量达到1W的时候 ，导出速度就会越来越慢。简单的盘一下。</p>
+<h4 id="开始"><strong>开始：</strong></h4>
+<p>代码如下：</p>
+<pre><code class="language-php">if (!empty($param['tag_name'])) {
+            $targetModel = M(&quot;target_user_type&quot;);
+            $session_ids = $targetModel-&gt;where([
+                'tag_name' =&gt; $param['tag_name'],
+                'scene_id' =&gt; $param['scene_id']
+            ])-&gt;field(&quot;session_id&quot;)-&gt;select();
+            foreach ($session_ids as $keytemp=&gt;$valuetemp){
+                $session_arr[] = $valuetemp['session_id'];
+            }
+            if (count($session_arr) &gt; 0) {
+                $where['session_id'] = [&quot;in&quot;,$session_arr];
+            }else{
+                $this-&gt;myAjaxReturn(0, &quot;&quot;,[&quot;fieldList&quot;=&gt;[],&quot;dataList&quot;=&gt;[] , &quot;mapData&quot; =&gt; []],0);
+            }
+        }
+
+        $data = $this-&gt;getReportData($where,$param,$session_arr,false , true);
+</code></pre>
+<h4 id="分析"><strong>分析：</strong></h4>
+<p>由上述代码得知拿到查询条件之后，根据条件一次性获取所有导出数据。这样会引起两个问题：</p>
+<ul>
+<li>由php本身的垃圾回收机制导致的大数组处理占用内存飙升</li>
+<li>一次性获取大量数据会导致mysql卡顿</li>
+</ul>
+<h4 id="问题解决">问题解决</h4>
+<pre><code class="language-php">if (!empty($param['tag_name'])) {
+            $targetModel = M(&quot;target_user_type&quot;);
+            $session_arr = $targetModel-&gt;where([
+                'tag_name' =&gt; $param['tag_name'],
+                'scene_id' =&gt; $param['scene_id']
+            ])-&gt;where($swhere)-&gt;getField('session_id',true);
+            if (count($session_arr) &lt; 1) {
+                $this-&gt;myAjaxReturn(0, &quot;&quot;,[&quot;fieldList&quot;=&gt;[],&quot;dataList&quot;=&gt;[] , &quot;mapData&quot; =&gt; []],0);
+            }
+        }else{
+            $robotModel = intval($param['type']) == 1? M('robot_chat_converge_call_in'):M('robot_chat_converge');
+            $session_arr = $robotModel-&gt;where($where)-&gt;order('id desc')-&gt;getField('session_id',true);
+        }
+        if(isset($where['add_time'])){
+            unset($where['add_time']);
+        }
+        $totalData = 0;
+        $writer = new \Home\Util\XLSXWriter();
+        $sheet_name = &quot;Sheet1&quot;;
+        if(isset($session_arr) &amp;&amp; count($session_arr)&gt;0){
+            $new_array = array_chunk($session_arr,500);
+            foreach ($new_array as $nkey =&gt; $val) {
+                unset($exportData);
+                $exportData = [];
+                $where['session_id'] = [&quot;in&quot;,$val];
+                $data = $this-&gt;getReportData($where,$param,$session_arr,false , true);
+</code></pre>
+<p>上述代码首先获取了全部的session_id 数组，然后分批获取导出数据，再执行导出。在导出一批数据之后unset掉临时数组减少内存占用，提升导出速度。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://wuyadi.github.io/tag/vgdkEtpzM8/" class="tag">
+                    excel
+                  </a>
+                
+                  <a href="https://wuyadi.github.io/tag/U6CteJZ65O/" class="tag">
+                    性能
+                  </a>
+                
+                  <a href="https://wuyadi.github.io/tag/3WTMsKTgK/" class="tag">
+                    php
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/">
+                  <h3 class="post-title">
+                    phpexcel性能瓶颈及其优化 I
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
