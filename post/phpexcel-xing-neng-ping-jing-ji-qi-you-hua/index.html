@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>phpexcel性能瓶颈及其优化 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1612766229870">
+<link rel="stylesheet" href="https://wuyadi.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="PHP导出excel常见报错
+导出报错 Fatal error: Out of memory
+Fatal error: Out of memory (allocated 1048576) (tried to allocate 393216 ..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wuyadi.github.io">
+        <img src="https://wuyadi.github.io/images/avatar.png?v=1612766229870" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      知耻近乎勇
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://wuyadi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">phpexcel性能瓶颈及其优化</h2>
+            <div class="post-date">2019-02-02</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="php导出excel常见报错">PHP导出excel常见报错</h2>
+<h3 id="导出报错-fatal-error-out-of-memory">导出报错 Fatal error: Out of memory</h3>
+<p>Fatal error: Out of memory (allocated 1048576) (tried to allocate 393216 bytes)<br>
+在程序中添加 ini_set(&quot;memory_limit&quot;,&quot;2080M&quot;);<br>
+或者直接修改php.ini中的memory_limit<br>
+memory_limit参数PHP可以占用的内存数，注意不要超过机器的实际内存。</p>
+<h3 id="导出报错-502bad-gateway">导出报错 502bad gateway</h3>
+<p>502是程序运行超时是nginx和php-fpm配置的问题。<br>
+一般我们设置一下php-fpm.conf中的request_terminate_timeout之后重启PHP-FPM和nginx服务就可以了。</p>
+<h3 id="导出报错-该网页无法正常运作-目前无法处理此请求-http-error-500">导出报错 该网页无法正常运作 目前无法处理此请求。HTTP ERROR 500</h3>
+<p>在测试环境下修改php.ini开启<br>
+display_errors = On<br>
+display_startup_errors = On<br>
+并重启服务，然后根据报错相应处理</p>
+<h2 id="由以上报错我们可以得出-php的性能瓶颈在于服务器性能当导出数量大于1w条的时候随着php使用服务器内存的增加导出速度在相应的下降">由以上报错我们可以得出 php的性能瓶颈在于服务器性能，当导出数量大于1W条的时候，随着PHP使用服务器内存的增加，导出速度在相应的下降。</h2>
+<h2 id="php导出excel的优化">PHP导出EXCEL的优化</h2>
+<h3 id="不要在写入excel的时候进行计算">不要在写入EXCEL的时候进行计算</h3>
+<h3 id="不要再大数据的时候设置单元格样式">不要再大数据的时候设置单元格样式</h3>
+<h3 id="分批次写入">分批次写入</h3>
+<h3 id="使用phpexcel_settingssetcachestoragemethod-降低程序对内存的消耗">使用PHPExcel_Settings::setCacheStorageMethod() 降低程序对内存的消耗</h3>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://wuyadi.github.io/post/chou-xiang-lei-jie-kou-de-ding-yi-qu-bie-he-shi-yong-chang-jing/">
+                  <h3 class="post-title">
+                    抽象类、接口的定义、区别和使用场景
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

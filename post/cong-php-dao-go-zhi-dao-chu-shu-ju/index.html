@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>从PHP到GO之导出数据 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1612766229870">
+<link rel="stylesheet" href="https://wuyadi.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="前情：
+生产环境有客户经常从ES中导出不同时段的数据，一天数据大概有12W，现有的php导出速度在优化之后一次导出耗时需要27-35分钟，所以有了这次优化。
+开始：
+HBASE + ES
+因为现在的主要耗时在于从es获取数据时的耗时比较久，..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wuyadi.github.io">
+        <img src="https://wuyadi.github.io/images/avatar.png?v=1612766229870" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      知耻近乎勇
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://wuyadi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">从PHP到GO之导出数据</h2>
+            <div class="post-date">2020-03-25</div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="前情">前情：</h3>
+<p>生产环境有客户经常从ES中导出不同时段的数据，一天数据大概有12W，现有的php导出速度在优化之后一次导出耗时需要27-35分钟，所以有了这次优化。</p>
+<h3 id="开始">开始：</h3>
+<h4 id="hbase-es">HBASE + ES</h4>
+<p>因为现在的主要耗时在于从es获取数据时的耗时比较久，首先尝试了，将相对大的数据字段存储到HBASE，然后每次查询都从es获取ID，再从HBASE获取文本的数据。经测试从ES + HBASE比单纯ES快，但是效果不显著，还是不能满足客户需要。</p>
+<h4 id="从php到golang">从PHP到Golang</h4>
+<p>在改造了存储结构没有好的结果的时候，从头理了一下整个流程。发现因为语言的限制php每次只有一个并发从ES取数据，那么我们使用高并发的语言GO来并发的从ES拿数据，速度应该会提升不少。选中了常用的go-for-es插件olivere/elastic.v5 。</p>
+<p>首先我们再main里面以10个<em>go</em>routine从ES拿数据。</p>
+<pre><code class="language-go">    count := 10
+	ch := make(chan bool, count)
+	for i := 0; i &lt; count; i++ {
+		go queryEs(ch, i)
+	}
+	for i := 0; i &lt; count; i++ {
+		&lt;-ch
+	}
+    sliceQuery := NewSliceQuery().Id(i).Max(10)
+	boolQ := elastic.NewBoolQuery()
+	boolQ.Must(elastic.NewMatchQuery(&quot;ai_status&quot;, 3))
+	boolQ.Filter(elastic.NewRangeQuery(&quot;create_time&quot;).Gt(1583337600))
+	boolQ.Filter(elastic.NewRangeQuery(&quot;create_time&quot;).Lt(1585151999))
+	svc := client.Scroll(&quot;index&quot;).Query(boolQ).Slice(sliceQuery).Size(800)
+</code></pre>
+<p>然后就是对数据的处理：</p>
+<pre><code class="language-go">    result, err := svc.Do(context.TODO())
+		if err == io.EOF {
+			break
+		}
+
+		if err != nil {
+			//fmt.Printf(err)
+			break
+		}
+
+		for _, r := range result.Hits.Hits {
+			jsonstring := *r.Source
+			var source Source
+			err = json.Unmarshal(jsonstring, &amp;source)
+</code></pre>
+<p>经测试导出数据20W条数据只需要10分钟</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/">
+                  <h3 class="post-title">
+                    phpexcel性能瓶颈及其优化
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>Gridea</title>
-    <updated>2021-02-08T06:26:59.369Z</updated>
+    <updated>2021-02-08T06:37:23.066Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
@@ -11,35 +11,105 @@
     <icon>https://wuyadi.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Gridea</rights>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://wuyadi.github.io/post/hello-gridea/</id>
-        <link href="https://wuyadi.github.io/post/hello-gridea/">
+        <title type="html"><![CDATA[从PHP到GO之导出数据]]></title>
+        <id>https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/</id>
+        <link href="https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/">
         </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+        <updated>2020-03-25T12:57:13.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="前情">前情：</h3>
+<p>生产环境有客户经常从ES中导出不同时段的数据，一天数据大概有12W，现有的php导出速度在优化之后一次导出耗时需要27-35分钟，所以有了这次优化。</p>
+<h3 id="开始">开始：</h3>
+<h4 id="hbase-es">HBASE + ES</h4>
+<p>因为现在的主要耗时在于从es获取数据时的耗时比较久，首先尝试了，将相对大的数据字段存储到HBASE，然后每次查询都从es获取ID，再从HBASE获取文本的数据。经测试从ES + HBASE比单纯ES快，但是效果不显著，还是不能满足客户需要。</p>
+<h4 id="从php到golang">从PHP到Golang</h4>
+<p>在改造了存储结构没有好的结果的时候，从头理了一下整个流程。发现因为语言的限制php每次只有一个并发从ES取数据，那么我们使用高并发的语言GO来并发的从ES拿数据，速度应该会提升不少。选中了常用的go-for-es插件olivere/elastic.v5 。</p>
+<p>首先我们再main里面以10个<em>go</em>routine从ES拿数据。</p>
+<pre><code class="language-go">    count := 10
+	ch := make(chan bool, count)
+	for i := 0; i &lt; count; i++ {
+		go queryEs(ch, i)
+	}
+	for i := 0; i &lt; count; i++ {
+		&lt;-ch
+	}
+    sliceQuery := NewSliceQuery().Id(i).Max(10)
+	boolQ := elastic.NewBoolQuery()
+	boolQ.Must(elastic.NewMatchQuery(&quot;ai_status&quot;, 3))
+	boolQ.Filter(elastic.NewRangeQuery(&quot;create_time&quot;).Gt(1583337600))
+	boolQ.Filter(elastic.NewRangeQuery(&quot;create_time&quot;).Lt(1585151999))
+	svc := client.Scroll(&quot;index&quot;).Query(boolQ).Slice(sliceQuery).Size(800)
+</code></pre>
+<p>然后就是对数据的处理：</p>
+<pre><code class="language-go">    result, err := svc.Do(context.TODO())
+		if err == io.EOF {
+			break
+		}
+
+		if err != nil {
+			//fmt.Printf(err)
+			break
+		}
+
+		for _, r := range result.Hits.Hits {
+			jsonstring := *r.Source
+			var source Source
+			err = json.Unmarshal(jsonstring, &amp;source)
+</code></pre>
+<p>经测试导出数据20W条数据只需要10分钟</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[phpexcel性能瓶颈及其优化]]></title>
+        <id>https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/</id>
+        <link href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/">
+        </link>
+        <updated>2019-02-02T02:25:10.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="php导出excel常见报错">PHP导出excel常见报错</h2>
+<h3 id="导出报错-fatal-error-out-of-memory">导出报错 Fatal error: Out of memory</h3>
+<p>Fatal error: Out of memory (allocated 1048576) (tried to allocate 393216 bytes)<br>
+在程序中添加 ini_set(&quot;memory_limit&quot;,&quot;2080M&quot;);<br>
+或者直接修改php.ini中的memory_limit<br>
+memory_limit参数PHP可以占用的内存数，注意不要超过机器的实际内存。</p>
+<h3 id="导出报错-502bad-gateway">导出报错 502bad gateway</h3>
+<p>502是程序运行超时是nginx和php-fpm配置的问题。<br>
+一般我们设置一下php-fpm.conf中的request_terminate_timeout之后重启PHP-FPM和nginx服务就可以了。</p>
+<h3 id="导出报错-该网页无法正常运作-目前无法处理此请求-http-error-500">导出报错 该网页无法正常运作 目前无法处理此请求。HTTP ERROR 500</h3>
+<p>在测试环境下修改php.ini开启<br>
+display_errors = On<br>
+display_startup_errors = On<br>
+并重启服务，然后根据报错相应处理</p>
+<h2 id="由以上报错我们可以得出-php的性能瓶颈在于服务器性能当导出数量大于1w条的时候随着php使用服务器内存的增加导出速度在相应的下降">由以上报错我们可以得出 php的性能瓶颈在于服务器性能，当导出数量大于1W条的时候，随着PHP使用服务器内存的增加，导出速度在相应的下降。</h2>
+<h2 id="php导出excel的优化">PHP导出EXCEL的优化</h2>
+<h3 id="不要在写入excel的时候进行计算">不要在写入EXCEL的时候进行计算</h3>
+<h3 id="不要再大数据的时候设置单元格样式">不要再大数据的时候设置单元格样式</h3>
+<h3 id="分批次写入">分批次写入</h3>
+<h3 id="使用phpexcel_settingssetcachestoragemethod-降低程序对内存的消耗">使用PHPExcel_Settings::setCacheStorageMethod() 降低程序对内存的消耗</h3>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[抽象类、接口的定义、区别和使用场景]]></title>
+        <id>https://wuyadi.github.io/post/chou-xiang-lei-jie-kou-de-ding-yi-qu-bie-he-shi-yong-chang-jing/</id>
+        <link href="https://wuyadi.github.io/post/chou-xiang-lei-jie-kou-de-ding-yi-qu-bie-he-shi-yong-chang-jing/">
+        </link>
+        <updated>2018-09-09T09:34:27.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="抽象类的定义">抽象类的定义</h2>
+<p>PHP 5 支持抽象类和抽象方法。定义为抽象的类不能被实例化。任何一个类，如果它里面至少有一个方法是被声明为抽象的，那么这个类就必须被声明为抽象的。被定义为抽象的方法只是声明了其调用方式（参数），不能定义其具体的功能实现。</p>
+<p>继承一个抽象类的时候，子类必须定义父类中的所有抽象方法；另外，这些方法的访问控制必须和父类中一样（或者更为宽松）。例如某个抽象方法被声明为受保护的，那么子类中实现的方法就应该声明为受保护的或者公有的，而不能定义为私有的。此外方法的调用方式必须匹配，即类型和所需参数数量必须一致。例如，子类定义了一个可选参数，而父类抽象方法的声明里没有，则两者的声明并无冲突。 这也适用于 PHP 5.4 起的构造函数。在 PHP 5.4 之前的构造函数声明可以不一样的。</p>
+<h2 id="接口的定义">接口的定义</h2>
+<p>使用接口（interface），可以指定某个类必须实现哪些方法，但不需要定义这些方法的具体内容。<br>
+接口是通过 interface 关键字来定义的，就像定义一个标准的类一样，但其中定义所有的方法都是空的。<br>
+接口中定义的所有方法都必须是公有，这是接口的特性。</p>
+<h3 id="tips">TIPS</h3>
+<p>实现多个接口时，接口中的方法不能有重名。<br>
+接口也可以继承，通过使用 extends 操作符。<br>
+类要实现接口，必须使用和接口中所定义的方法完全一致的方式。否则会导致致命错误。<br>
+接口中也可以定义常量。接口常量和类常量的使用完全相同，但是不能被子类或子接口所覆盖。</p>
+<h2 id="抽象类和接口的区别">抽象类和接口的区别</h2>
+<p>对接口的继承使用implements,抽象类使用extends.<br>
+接口中不可以声明变量,但可以声明类常量.抽象类中可以声明各种变量<br>
+接口没有构造函数,抽象类可以有<br>
+接口中的方法默认为public,抽象类中的方法可以用public,protected,private修饰<br>
+一个类可以继承多个接口,但只能继承一个抽象类</p>
 ]]></content>
     </entry>
 </feed>
