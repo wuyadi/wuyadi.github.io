@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>一个兴趣使然的程序员</title>
-    <updated>2021-02-08T09:28:03.713Z</updated>
+    <updated>2021-02-08T09:58:37.055Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
@@ -10,6 +10,24 @@
     <logo>https://wuyadi.github.io/images/avatar.png</logo>
     <icon>https://wuyadi.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 一个兴趣使然的程序员</rights>
+    <entry>
+        <title type="html"><![CDATA[做面试官一周有感]]></title>
+        <id>https://wuyadi.github.io/post/zuo-mian-shi-guan-yi-zhou-you-gan/</id>
+        <link href="https://wuyadi.github.io/post/zuo-mian-shi-guan-yi-zhou-you-gan/">
+        </link>
+        <updated>2020-09-18T12:47:26.000Z</updated>
+        <content type="html"><![CDATA[<p>因为公司在996之后，任务量还是没有完全的消化。领导决定给我们组添加两个同事儿，然后让我作为初面面试官。然后我开始了诚惶诚恐的面试官体验。</p>
+<p>首先是简历的筛选，真的是五味杂陈。</p>
+<ul>
+<li>有的同学写了很多公司的项目，但是通篇都是业务的内容，没有体现自己在团队中的作用，没有表达出自己做了什么；</li>
+<li>有的同学写了很多技术栈，但是问起来又没有实战经验和技能；</li>
+<li>有的同学字体选的偏小，看起来很累。</li>
+</ul>
+<p>再次是面试的感觉，在面试的过程中，我喜欢让面试者分享工作中做的有意思，有激情的事情。在这一周多的面试中没有一个面试小伙儿可以分享一个有意思的故事，大多小伙的表情是迷茫的，然后说每天都在做业务。</p>
+<p>最后还有一点对于个人追求的要求，对于代码，对于作品没有追求的程序员是很可怕的，他产出的代码质量是很低的。</p>
+<h5 id="以人为鉴可以知得失-争取在以后的工作和生活中不要犯以上的这种错误小错误啊">以人为鉴,可以知得失。争取在以后的工作和生活中不要犯以上的这种错误，小错误啊。</h5>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[奇怪的bug]]></title>
         <id>https://wuyadi.github.io/post/qi-guai-de-bug/</id>
@@ -19,17 +37,15 @@
         <content type="html"><![CDATA[<h3 id="前情">前情：</h3>
 <p>在更新了一个数据权限的模块之后，测试同学说有个权限的bug。在检查代码后，发现了罪魁祸首。</p>
 <h3 id="开始">开始：</h3>
-<pre><code class="language-php">$arr = array('name' =&gt; 'test', 'sex' =&gt; 'male','age' =&gt; 0);
-
-if(in_array('h232',$arr)) {
-
-​    ***
-
-} else {
-
-​    ***
-
-}
+<pre><code class="language-php"> $keys = ['callerNum','calleeNum','agentName','agentID','customer_name','phone','ID_number','birth'];
+        $phoneKeys = ['callerNum','calleeNum','phone'];
+        $ID_numbers = ['ID_number'];
+        $leftKeys = ['birth'];
+        foreach ($data as $key =&gt; $value) {
+            if(is_array($value)){
+                $data[$key] = $this-&gt;withAllSecret($value);
+            }else{
+                if($key &amp;&amp; in_array($key,$keys)){
 </code></pre>
 <h3 id="分析">分析：</h3>
 <p>在[官网]: https://www.php.net/manual/zh/function.in-array.php</p>
@@ -37,9 +53,9 @@ if(in_array('h232',$arr)) {
 <pre><code class="language-php">in_array ( mixed $needle , array $haystack , bool $strict = false ) : bool
 </code></pre>
 <p>所以in_array()函数的value值会与搜索的值比较，如果不加第三个参数，in_array()会把搜索的类型强制转换成和value值一样进行比较。</p>
-<p>所以，上面的搜索值 ‘h232’ 在和value = 0 进行比较的时候 ‘h234’强制转换成了number 0;</p>
+<p>所以，上面的搜索值 为‘h232’ 在和value = 0 进行比较的时候 ‘h234’强制转换成了number 0</p>
 <h3 id="结论">结论：</h3>
-<p>在使用in_array方法时，尽量使用第三个参数，避免因为类型转换，导致奇怪的报障。</p>
+<p>在使用in_array方法时，尽量使用第三个参数，避免因为类型转换，导致程序走向歧途。</p>
 ]]></content>
     </entry>
     <entry>

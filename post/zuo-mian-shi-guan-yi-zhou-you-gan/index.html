@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>奇怪的bug | 一个兴趣使然的程序员</title>
+<title>做面试官一周有感 | 一个兴趣使然的程序员</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,11 +18,11 @@
 
 
 
-    <meta name="description" content="前情：
-在更新了一个数据权限的模块之后，测试同学说有个权限的bug。在检查代码后，发现了罪魁祸首。
-开始：
- $keys = ['callerNum','calleeNum','agentName','agentID','customer_..." />
-    <meta name="keywords" content="php,bug" />
+    <meta name="description" content="因为公司在996之后，任务量还是没有完全的消化。领导决定给我们组添加两个同事儿，然后让我作为初面面试官。然后我开始了诚惶诚恐的面试官体验。
+首先是简历的筛选，真的是五味杂陈。
+
+有的同学写了很多公司的项目，但是通篇都是业务的内容，没有体现自..." />
+    <meta name="keywords" content="面试,随笔" />
   </head>
   <body>
     <div id="app" class="main">
@@ -93,46 +93,34 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">奇怪的bug</h2>
-            <div class="post-date">2020-07-23</div>
+            <h2 class="post-title">做面试官一周有感</h2>
+            <div class="post-date">2020-09-18</div>
             
-              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/qi-guai-de-bug.jpg')">
+              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/zuo-mian-shi-guan-yi-zhou-you-gan.jpg')">
               </div>
             
             <div class="post-content" v-pre>
-              <h3 id="前情">前情：</h3>
-<p>在更新了一个数据权限的模块之后，测试同学说有个权限的bug。在检查代码后，发现了罪魁祸首。</p>
-<h3 id="开始">开始：</h3>
-<pre><code class="language-php"> $keys = ['callerNum','calleeNum','agentName','agentID','customer_name','phone','ID_number','birth'];
-        $phoneKeys = ['callerNum','calleeNum','phone'];
-        $ID_numbers = ['ID_number'];
-        $leftKeys = ['birth'];
-        foreach ($data as $key =&gt; $value) {
-            if(is_array($value)){
-                $data[$key] = $this-&gt;withAllSecret($value);
-            }else{
-                if($key &amp;&amp; in_array($key,$keys)){
-</code></pre>
-<h3 id="分析">分析：</h3>
-<p>在[官网]: https://www.php.net/manual/zh/function.in-array.php</p>
-<p>对于in_array这个方法的解释为：in_array — 检查数组中是否存在某个值</p>
-<pre><code class="language-php">in_array ( mixed $needle , array $haystack , bool $strict = false ) : bool
-</code></pre>
-<p>所以in_array()函数的value值会与搜索的值比较，如果不加第三个参数，in_array()会把搜索的类型强制转换成和value值一样进行比较。</p>
-<p>所以，上面的搜索值 为‘h232’ 在和value = 0 进行比较的时候 ‘h234’强制转换成了number 0</p>
-<h3 id="结论">结论：</h3>
-<p>在使用in_array方法时，尽量使用第三个参数，避免因为类型转换，导致程序走向歧途。</p>
+              <p>因为公司在996之后，任务量还是没有完全的消化。领导决定给我们组添加两个同事儿，然后让我作为初面面试官。然后我开始了诚惶诚恐的面试官体验。</p>
+<p>首先是简历的筛选，真的是五味杂陈。</p>
+<ul>
+<li>有的同学写了很多公司的项目，但是通篇都是业务的内容，没有体现自己在团队中的作用，没有表达出自己做了什么；</li>
+<li>有的同学写了很多技术栈，但是问起来又没有实战经验和技能；</li>
+<li>有的同学字体选的偏小，看起来很累。</li>
+</ul>
+<p>再次是面试的感觉，在面试的过程中，我喜欢让面试者分享工作中做的有意思，有激情的事情。在这一周多的面试中没有一个面试小伙儿可以分享一个有意思的故事，大多小伙的表情是迷茫的，然后说每天都在做业务。</p>
+<p>最后还有一点对于个人追求的要求，对于代码，对于作品没有追求的程序员是很可怕的，他产出的代码质量是很低的。</p>
+<h5 id="以人为鉴可以知得失-争取在以后的工作和生活中不要犯以上的这种错误小错误啊">以人为鉴,可以知得失。争取在以后的工作和生活中不要犯以上的这种错误，小错误啊。</h5>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://wuyadi.github.io/tag/3WTMsKTgK/" class="tag">
-                    php
+                  <a href="https://wuyadi.github.io/tag/l-ypQzqK7/" class="tag">
+                    面试
                   </a>
                 
-                  <a href="https://wuyadi.github.io/tag/zTuC-f5CwN/" class="tag">
-                    bug
+                  <a href="https://wuyadi.github.io/tag/miO2Lc0qGb/" class="tag">
+                    随笔
                   </a>
                 
               </div>
@@ -140,9 +128,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/">
+                <a href="https://wuyadi.github.io/post/qi-guai-de-bug/">
                   <h3 class="post-title">
-                    从PHP到GO之导出数据
+                    奇怪的bug
                   </h3>
                 </a>
               </div>
