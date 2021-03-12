@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>一个兴趣使然的程序员</title>
-    <updated>2021-02-08T10:02:13.998Z</updated>
+    <updated>2021-03-12T12:58:25.252Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
@@ -10,6 +10,49 @@
     <logo>https://wuyadi.github.io/images/avatar.png</logo>
     <icon>https://wuyadi.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 一个兴趣使然的程序员</rights>
+    <entry>
+        <title type="html"><![CDATA[关于高级程序员的思考(ˇˍˇ)]]></title>
+        <id>https://wuyadi.github.io/post/guan-yu-gao-ji-cheng-xu-yuan-de-si-kao-v_v/</id>
+        <link href="https://wuyadi.github.io/post/guan-yu-gao-ji-cheng-xu-yuan-de-si-kao-v_v/">
+        </link>
+        <updated>2021-03-12T12:13:46.000Z</updated>
+        <content type="html"><![CDATA[<p>这周面试了一个工作了11年的前辈，整个面试过程情绪波动比较大，感触良多。</p>
+<h5 id="以下是面试老哥的部分简历">以下是面试老哥的部分简历：</h5>
+<figure data-type="image" tabindex="1"><img src="https://wuyadi.github.io/post-images/1615553244155.png" alt="" loading="lazy"></figure>
+<p>刚开始面试的时候我是有点虚的，毕竟眼前的这位可能是一个大佬。但是随着交流我发现事情并不简单。</p>
+<ol>
+<li>
+<p>后端知识点：jvm的相关知识点答得含糊其辞，对于内存回收也没有说到点。他解释说最近两年都在做架构工作，java基础功有点拉下了。</p>
+</li>
+<li>
+<p>数据库：</p>
+<p>我：对于</p>
+<pre><code class="language-mysql">select * from users where created_at&gt;&quot;20190802&quot; and phone like &quot;1820222%&quot; order by uid desc limit 10;
+/*
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uid` (`uid`) USING BTREE,
+  KEY `created_at` (`created_at`,`phone`) USING BTREE
+*/
+</code></pre>
+<p>这个查询语句，你怎么进行优化？</p>
+<p>老哥：首先这个*是不对的，要根据业务需要进行获取。<br>
+（长达五分钟的沉默）<br>
+老哥：这边排序为什么不用id？<br>
+老哥：这边uid排序确实没有id快，你能简单说明下它为什么要用id吗？快的原因是什么？<br>
+可惜我最后还是没有听到回表啊，索引的实现原理啊。这让我对他专研技术的描述产生了怀疑。</p>
+</li>
+<li>
+<p>前端：</p>
+<p>问：请问你前端主要使用的什么框架？</p>
+<p>答：主要使用Jquery和layui 做一些后台系统。</p>
+<p>我终于可以确定：这是一个老 crud boy。</p>
+<p>仔细看了下他的简历发现，最近的一份工作是半年前。人到中年的程序员啊，怎么才能保持自己的核心竞争力呢？高级程序员，和中级的区别又在哪里呢？被迫转岗难道就是唯一的出路吗？</p>
+<p>我认为高级程序员，高在经验，在看问题的广度，更在技术的深度。<br>
+程序员的安身立命之本永远是技术。</p>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[做面试官一周有感]]></title>
         <id>https://wuyadi.github.io/post/zuo-mian-shi-guan-yi-zhou-you-gan/</id>
