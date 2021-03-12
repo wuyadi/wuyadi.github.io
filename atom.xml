@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>一个兴趣使然的程序员</title>
-    <updated>2021-03-12T13:02:31.811Z</updated>
+    <updated>2021-03-12T13:38:21.840Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
@@ -69,6 +69,75 @@
 <p>再次是面试的感觉，在面试的过程中，我喜欢让面试者分享工作中做的有意思，有激情的事情。在这一周多的面试中没有一个面试小伙儿可以分享一个有意思的故事，大多小伙的表情是迷茫的，然后说每天都在做业务。做业务很正常，但是没有积累和沉淀，反思就有点差劲了。</p>
 <p>最后有很多phper对于代码，对于作品没有追求的程序员是没有追求的，这样无疑很可怕，他产出的代码估计后期需要更多的同事去维护。</p>
 <h5 id="以人为鉴可以知得失-争取在以后的工作和生活中不要犯以上的这种错误小错误啊">以人为鉴,可以知得失。争取在以后的工作和生活中不要犯以上的这种错误，小错误啊。</h5>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[php导出最终章]]></title>
+        <id>https://wuyadi.github.io/post/php-dao-chu-zui-zhong-zhang/</id>
+        <link href="https://wuyadi.github.io/post/php-dao-chu-zui-zhong-zhang/">
+        </link>
+        <updated>2020-09-11T13:33:21.000Z</updated>
+        <content type="html"><![CDATA[<p>产品新上了一个标注平台，主要功能是，标注asr识别不准的文字，然后重新提交训练提高asr 的识别准确率。然后业务那边提了一个导出错误和正确文本对比的需求，听起来实现很容易，然后业务又说，错误的文本要用颜色标红区分出来。这个听起来也不难，同事小伙儿coding。。。</p>
+<p>问题来了，使用传统的ExcelUtil，代码如下</p>
+<pre><code class="language-php">Excel::create($exportName,function ($excel) use ($execlData,$keyword){
+            $excel-&gt;sheet('score', function ($sheet) use ($execlData,$keyword){
+                $sheet-&gt;rows($execlData);
+                $count = count($execlData);
+                for ($i=1; $i &lt; $count; $i++) {
+                    $line = $i+1;
+                    $objRichText = $this-&gt;dealKeyword($keyword,$execlData[$i][2]);
+                    $sheet-&gt;setCellValue('C'.$line,$objRichText);
+                    $objRichText1 = $this-&gt;dealKeyword($keyword,$execlData[$i][3]);
+                    $sheet-&gt;setCellValue('D'.$line,$objRichText1);
+                    if (isset($execlData[$i-1]) &amp;&amp; $execlData[$i][0] == $execlData[$i-1][0]) {
+                        $sheet-&gt;mergeCells(&quot;A&quot;.($line-1).&quot;:A&quot;.($line));
+                        $sheet-&gt;mergeCells(&quot;B&quot;.($line-1).&quot;:B&quot;.($line));
+                    }
+                    $sheet-&gt;getStyle('A'.$line.':B'.$line)-&gt;getAlignment()-&gt;setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                }
+            });
+        })-&gt;store('xls',$path);
+</code></pre>
+<p>之后导出是可以导出，颜色也可以区分。但是在数据到100左右的时候，导出的excel尾部变成了乱码。在对ExcelUtil的各种参数进行调优和变量重置之后。小伙儿开始求助于我们，最终认定ExcelUtil不能实现这个需求。</p>
+<p>然后在google的时候发现python可以导出来</p>
+<pre><code class="language-python">from xlsxwriter.workbook import Workbook
+import re
+
+
+workbook = Workbook('a.xlsx')
+worksheet = workbook.add_worksheet()
+color = workbook.add_format({'color': 'red', 'bold': True})
+
+
+rc = re.compile('([0-9年月日]{2,})')
+sentence = '2020年月12日母校初见。1月26日长烟落日孤城闭，2月9日神仙眷侣云比心'
+format_ls = rc.split(sentence)
+for i in range(len(format_ls)-1, -1, -1):
+    if rc.fullmatch(format_ls[i]):
+        format_ls.insert(i, color)  # Prefix the word with the format
+print(format_ls)
+
+row, col = 2, 1
+worksheet.write_rich_string(row, col, *format_ls)
+workbook.close()
+</code></pre>
+<p>所以我们依葫芦画瓢，同样用xlsxwriter实现这个功能不就好了么。</p>
+<p>然后发现[xlsxwriter]: https://github.com/mk-j/PHP_XLSXWriter</p>
+<p>并没有write_rich_string这个方法。oops，这可不太妙。没有轮子就自己造轮子。<br>
+通过阅读XLSXWriter的源码。复写了writeCell方法，在方法中新增逻辑如下：</p>
+<pre><code class="language-php">$cell_name = self::xlsCell($row_number, $column_number);
+		if (is_array($value) &amp;&amp; isset($value[0]['style']['color'])) {
+			$str = &quot;&quot;;
+			foreach ($value as $key =&gt; $val) {
+				if(isset($val['style']['color'])){
+					$str  = $str.'&lt;r&gt;&lt;rPr&gt;&lt;color rgb=&quot;'.$val['style']['color'].'&quot;/&gt;&lt;/rPr&gt;&lt;t&gt;'.$val['text'].'&lt;/t&gt;&lt;/r&gt;';
+				}
+			}
+			$file-&gt;write('&lt;c r=&quot;'.$cell_name.'&quot; s=&quot;'.$cell_style_idx.'&quot; t=&quot;inlineStr&quot;&gt;&lt;is&gt;'.$str.'&lt;/is&gt; &lt;/c&gt;');
+			return ;
+		}
+</code></pre>
+<p>代码完美运行。</p>
 ]]></content>
     </entry>
     <entry>

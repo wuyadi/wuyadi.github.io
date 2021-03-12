@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>php导出最终章 | 一个兴趣使然的程序员</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1615556298547">
+<link rel="stylesheet" href="https://wuyadi.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="产品新上了一个标注平台，主要功能是，标注asr识别不准的文字，然后重新提交训练提高asr 的识别准确率。然后业务那边提了一个导出错误和正确文本对比的需求，听起来实现很容易，然后业务又说，错误的文本要用颜色标红区分出来。这个听起来也不难，同事..." />
+    <meta name="keywords" content="XLSXWriter,excel,php" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wuyadi.github.io">
+        <img src="https://wuyadi.github.io/images/avatar.png?v=1615556298547" class="site-logo">
+        <h1 class="site-title">一个兴趣使然的程序员</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      知耻近乎勇
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://wuyadi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">php导出最终章</h2>
+            <div class="post-date">2020-09-11</div>
+            
+              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/php-dao-chu-zui-zhong-zhang.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>产品新上了一个标注平台，主要功能是，标注asr识别不准的文字，然后重新提交训练提高asr 的识别准确率。然后业务那边提了一个导出错误和正确文本对比的需求，听起来实现很容易，然后业务又说，错误的文本要用颜色标红区分出来。这个听起来也不难，同事小伙儿coding。。。</p>
+<p>问题来了，使用传统的ExcelUtil，代码如下</p>
+<pre><code class="language-php">Excel::create($exportName,function ($excel) use ($execlData,$keyword){
+            $excel-&gt;sheet('score', function ($sheet) use ($execlData,$keyword){
+                $sheet-&gt;rows($execlData);
+                $count = count($execlData);
+                for ($i=1; $i &lt; $count; $i++) {
+                    $line = $i+1;
+                    $objRichText = $this-&gt;dealKeyword($keyword,$execlData[$i][2]);
+                    $sheet-&gt;setCellValue('C'.$line,$objRichText);
+                    $objRichText1 = $this-&gt;dealKeyword($keyword,$execlData[$i][3]);
+                    $sheet-&gt;setCellValue('D'.$line,$objRichText1);
+                    if (isset($execlData[$i-1]) &amp;&amp; $execlData[$i][0] == $execlData[$i-1][0]) {
+                        $sheet-&gt;mergeCells(&quot;A&quot;.($line-1).&quot;:A&quot;.($line));
+                        $sheet-&gt;mergeCells(&quot;B&quot;.($line-1).&quot;:B&quot;.($line));
+                    }
+                    $sheet-&gt;getStyle('A'.$line.':B'.$line)-&gt;getAlignment()-&gt;setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                }
+            });
+        })-&gt;store('xls',$path);
+</code></pre>
+<p>之后导出是可以导出，颜色也可以区分。但是在数据到100左右的时候，导出的excel尾部变成了乱码。在对ExcelUtil的各种参数进行调优和变量重置之后。小伙儿开始求助于我们，最终认定ExcelUtil不能实现这个需求。</p>
+<p>然后在google的时候发现python可以导出来</p>
+<pre><code class="language-python">from xlsxwriter.workbook import Workbook
+import re
+
+
+workbook = Workbook('a.xlsx')
+worksheet = workbook.add_worksheet()
+color = workbook.add_format({'color': 'red', 'bold': True})
+
+
+rc = re.compile('([0-9年月日]{2,})')
+sentence = '2020年月12日母校初见。1月26日长烟落日孤城闭，2月9日神仙眷侣云比心'
+format_ls = rc.split(sentence)
+for i in range(len(format_ls)-1, -1, -1):
+    if rc.fullmatch(format_ls[i]):
+        format_ls.insert(i, color)  # Prefix the word with the format
+print(format_ls)
+
+row, col = 2, 1
+worksheet.write_rich_string(row, col, *format_ls)
+workbook.close()
+</code></pre>
+<p>所以我们依葫芦画瓢，同样用xlsxwriter实现这个功能不就好了么。</p>
+<p>然后发现[xlsxwriter]: https://github.com/mk-j/PHP_XLSXWriter</p>
+<p>并没有write_rich_string这个方法。oops，这可不太妙。没有轮子就自己造轮子。<br>
+通过阅读XLSXWriter的源码。复写了writeCell方法，在方法中新增逻辑如下：</p>
+<pre><code class="language-php">$cell_name = self::xlsCell($row_number, $column_number);
+		if (is_array($value) &amp;&amp; isset($value[0]['style']['color'])) {
+			$str = &quot;&quot;;
+			foreach ($value as $key =&gt; $val) {
+				if(isset($val['style']['color'])){
+					$str  = $str.'&lt;r&gt;&lt;rPr&gt;&lt;color rgb=&quot;'.$val['style']['color'].'&quot;/&gt;&lt;/rPr&gt;&lt;t&gt;'.$val['text'].'&lt;/t&gt;&lt;/r&gt;';
+				}
+			}
+			$file-&gt;write('&lt;c r=&quot;'.$cell_name.'&quot; s=&quot;'.$cell_style_idx.'&quot; t=&quot;inlineStr&quot;&gt;&lt;is&gt;'.$str.'&lt;/is&gt; &lt;/c&gt;');
+			return ;
+		}
+</code></pre>
+<p>代码完美运行。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://wuyadi.github.io/tag/Cgj5zKr2Y/" class="tag">
+                    XLSXWriter
+                  </a>
+                
+                  <a href="https://wuyadi.github.io/tag/vgdkEtpzM8/" class="tag">
+                    excel
+                  </a>
+                
+                  <a href="https://wuyadi.github.io/tag/3WTMsKTgK/" class="tag">
+                    php
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://wuyadi.github.io/post/qi-guai-de-bug/">
+                  <h3 class="post-title">
+                    奇怪的bug
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
