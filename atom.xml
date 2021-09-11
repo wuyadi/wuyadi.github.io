@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>一个兴趣使然的程序员</title>
-    <updated>2021-09-11T09:10:07.443Z</updated>
+    <updated>2021-09-11T09:47:40.428Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
@@ -50,6 +50,37 @@
 <li>融入世俗, 没有享受过用编程进行创造 or 自我表达的快乐<br>
 来自https://www.v2ex.com/t/801228</li>
 </ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[With great power comes great responsibility]]></title>
+        <id>https://wuyadi.github.io/post/with-great-power-comes-great-responsibility/</id>
+        <link href="https://wuyadi.github.io/post/with-great-power-comes-great-responsibility/">
+        </link>
+        <updated>2021-08-30T03:30:22.000Z</updated>
+        <content type="html"><![CDATA[<p>蜘蛛侠的叔叔曾经说过：能力越大，责任越大。</p>
+<p>以我国是按劳分配为大前提，</p>
+<p>则推导出：赚钱越多，劳动越多。</p>
+<p>而大家都是每天只有 24 小时的人，能劳动越多，说明能力越大。</p>
+<p>即推导出：赚的越多，责任越大。</p>
+<p>比如年轻人月收入一万，已经算不错的了吧，按 21.75 工作日算，日薪 460 元。</p>
+<p>某明星一天 208 万，相当于 4521 个年轻人的能力和责任。</p>
+<p>也就是说，只要某明星不躺平，即使有 4521 名年轻人躺平，也不影响国家发展。</p>
+<p>新东方有三四万名员工，只需要雇佣七八个不躺平版本某明星，就足够了。</p>
+<p>如果按资产算，俞敏洪身家 280 亿左右，一个普通的九五后资产就按 10 万算好了，俞敏洪的责任相当于 28 万人，相当于一个小县城，我们称为县级责任人。</p>
+<p>马云责任相当于四百多万人的责任，一个二线城市了，我们称为市级二品责任人。</p>
+<p>当然，相当于一线城市的市级一品责任人国内还没出现，但是贝佐斯、马斯克、比尔盖茨这些国外高手，已经达到了市级准一品境界。</p>
+<p>中国九五后大概 1.5 亿，也就是说，哪怕全都躺平，你们只要找到三四十个马云，或者五六百个俞敏洪，国家也有未来。</p>
+<p>当然，那肯定是不好找的，但是各个级别的高手凑一凑，大概率够的。</p>
+<p>薇娅之前进入了财富榜五百强，90 亿，差不多区域范围百强镇级别了吧，堪堪守门员。也就是说，这个级别的，上面还有将近五百个，那这个之下呢，像某明星这样村级高手，应该不少的。毕竟像王健林这样的市级三品高手，随手一个小目标就能击败中下等村级了。</p>
+<p>所以各位村级乡级镇级县级市级五品四品三品二品的人呀，只要你们不躺平，国家就有希望。争取早日出现比肩国外准一品境界的高手，甚至真正的市级一品，省级，国级，行星级，恒星级，宇宙级，不朽级，永恒级。</p>
+<p>你们的目标是星辰大海，不要往下看那些躺平的年轻人，你们对待年轻人躺平的态度应该像真正的高手那样：“哼，蝼蚁”。</p>
+<p>学学当年的斗帝萧炎，力争上游，勇攀高峰，不畏艰险，排除万难，从街道级别的斗者起步，三十年河东，三十年河西，莫欺中老年不够富。</p>
+<p>学学 RPG 里的勇者，一个级别一个级别的升级，连续突破了七八十级，最终的目标也是大魔王和大魔王背后的大大魔王，而不是整天盯着村里的史莱姆（隔壁那个变成魔王的史莱姆不算）。</p>
+<p>学学左晖，尽管已经突破成为了县级高手，依然还想突破，虽然最终陨落，但他勇敢的心值得你们向往。</p>
+<p>资本无限的持续增长本就是逆天而行，凶险无比，但是你们不怕。</p>
+<p>要向上看，向远看，不要看这些躺平的蝼蚁，他们不及你们的十万百万分之一。</p>
+<p>加油吧，资本人。</p>
 ]]></content>
     </entry>
     <entry>
@@ -392,34 +423,6 @@ workbook.close()
                 $data = $this-&gt;getReportData($where,$param,$session_arr,false , true);
 </code></pre>
 <p>上述代码首先获取了全部的session_id 数组，然后分批获取导出数据，再执行导出。在导出一批数据之后unset掉临时数组减少内存占用，提升导出速度。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[phpexcel性能瓶颈及其优化 I]]></title>
-        <id>https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/</id>
-        <link href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/">
-        </link>
-        <updated>2019-02-02T02:25:10.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="php导出excel常见报错">PHP导出excel常见报错</h2>
-<h3 id="导出报错-fatal-error-out-of-memory">导出报错 Fatal error: Out of memory</h3>
-<p>Fatal error: Out of memory (allocated 1048576) (tried to allocate 393216 bytes)<br>
-在程序中添加 ini_set(&quot;memory_limit&quot;,&quot;2080M&quot;);<br>
-或者直接修改php.ini中的memory_limit<br>
-memory_limit参数PHP可以占用的内存数，注意不要超过机器的实际内存。</p>
-<h3 id="导出报错-502bad-gateway">导出报错 502bad gateway</h3>
-<p>502是程序运行超时是nginx和php-fpm配置的问题。<br>
-一般我们设置一下php-fpm.conf中的request_terminate_timeout之后重启PHP-FPM和nginx服务就可以了。</p>
-<h3 id="导出报错-该网页无法正常运作-目前无法处理此请求-http-error-500">导出报错 该网页无法正常运作 目前无法处理此请求。HTTP ERROR 500</h3>
-<p>在测试环境下修改php.ini开启<br>
-display_errors = On<br>
-display_startup_errors = On<br>
-并重启服务，然后根据报错相应处理</p>
-<h2 id="由以上报错我们可以得出-php的性能瓶颈在于服务器性能当导出数量大于1w条的时候随着php使用服务器内存的增加导出速度在相应的下降">由以上报错我们可以得出 php的性能瓶颈在于服务器性能，当导出数量大于1W条的时候，随着PHP使用服务器内存的增加，导出速度在相应的下降。</h2>
-<h2 id="php导出excel的优化">PHP导出EXCEL的优化</h2>
-<h3 id="不要在写入excel的时候进行计算">不要在写入EXCEL的时候进行计算</h3>
-<h3 id="不要再大数据的时候设置单元格样式">不要再大数据的时候设置单元格样式</h3>
-<h3 id="分批次写入">分批次写入</h3>
-<h3 id="使用phpexcel_settingssetcachestoragemethod-降低程序对内存的消耗">使用PHPExcel_Settings::setCacheStorageMethod() 降低程序对内存的消耗</h3>
 ]]></content>
     </entry>
 </feed>
