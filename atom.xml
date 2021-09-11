@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>一个兴趣使然的程序员</title>
-    <updated>2021-09-11T08:56:22.668Z</updated>
+    <updated>2021-09-11T09:06:14.196Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
@@ -48,6 +48,55 @@
 <li><strong>喜欢过度设计</strong>。这个 “过度”，仁者见仁，智者见智，分不同场景下有不同的解释。</li>
 <li>引用别人的内容，从不标注出处。</li>
 </ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[代码规范原则]]></title>
+        <id>https://wuyadi.github.io/post/dai-ma-gui-fan-yuan-ze/</id>
+        <link href="https://wuyadi.github.io/post/dai-ma-gui-fan-yuan-ze/">
+        </link>
+        <updated>2021-06-17T08:57:28.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="keep-it-simple-and-stupid-原则">Keep it Simple and Stupid 原则</h3>
+<ul>
+<li>
+<p>在设计、制造当中以简约、简单为标准。因为简约、简单，才易于生产，易于维护，更易于操作</p>
+</li>
+<li>
+<p>要谦虚，不要认为自己是个天才</p>
+</li>
+<li>
+<p>将你的任务分解为4-12小时的子任务。</p>
+</li>
+<li>
+<p>把你的问题拆分成多个小问题。每个问题用一个或者很少的几个类来解决掉。</p>
+</li>
+<li>
+<p>保持你的方法足够小，每个方法永远不要超过30-40行代码。每个方法都应该只处理一个小小的问题，不要搞太多uses case进去。</p>
+</li>
+<li>
+<p>让你的类也小点，原则和上面的方法是一样的。</p>
+</li>
+<li>
+<p>先解决问题，然后开始编码。不要一边编码，一边解决问题。这样做也没什么错，但你有能力提前把事情切分成多个小的块，然后开始编码可能是比较好的。另外行数还不是为了衡量质量的标准，只是有个基本的尺子而已。</p>
+</li>
+<li>
+<p>不要害怕干掉代码。重构和重做是两个非常重要的方面。</p>
+</li>
+</ul>
+<h3 id="dry原则">DRY原则</h3>
+<p>Don't Repeat Yourself</p>
+<h3 id="组合原则">组合原则</h3>
+<p>设计时考虑拼接组合</p>
+<h3 id="通俗原则">通俗原则</h3>
+<p>接口设计避免标新立异</p>
+<h3 id="吝啬原则">吝啬原则</h3>
+<p>除非确无它法, 不要编写庞大的程序</p>
+<h3 id="透明性原则">透明性原则</h3>
+<p>设计要可见，以便审查和调试</p>
+<h3 id="补救原则">补救原则</h3>
+<p>出现异常时，马上退出并给出足够错误信息</p>
+<h3 id="缄默原则">缄默原则</h3>
+<p>如果一个程序没什么好说的，就沉默</p>
 ]]></content>
     </entry>
     <entry>
@@ -369,32 +418,6 @@ display_startup_errors = On<br>
 <h3 id="不要再大数据的时候设置单元格样式">不要再大数据的时候设置单元格样式</h3>
 <h3 id="分批次写入">分批次写入</h3>
 <h3 id="使用phpexcel_settingssetcachestoragemethod-降低程序对内存的消耗">使用PHPExcel_Settings::setCacheStorageMethod() 降低程序对内存的消耗</h3>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[抽象类、接口的定义、区别和使用场景]]></title>
-        <id>https://wuyadi.github.io/post/chou-xiang-lei-jie-kou-de-ding-yi-qu-bie-he-shi-yong-chang-jing/</id>
-        <link href="https://wuyadi.github.io/post/chou-xiang-lei-jie-kou-de-ding-yi-qu-bie-he-shi-yong-chang-jing/">
-        </link>
-        <updated>2018-09-09T09:34:27.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="抽象类的定义">抽象类的定义</h2>
-<p>PHP 5 支持抽象类和抽象方法。定义为抽象的类不能被实例化。任何一个类，如果它里面至少有一个方法是被声明为抽象的，那么这个类就必须被声明为抽象的。被定义为抽象的方法只是声明了其调用方式（参数），不能定义其具体的功能实现。</p>
-<p>继承一个抽象类的时候，子类必须定义父类中的所有抽象方法；另外，这些方法的访问控制必须和父类中一样（或者更为宽松）。例如某个抽象方法被声明为受保护的，那么子类中实现的方法就应该声明为受保护的或者公有的，而不能定义为私有的。此外方法的调用方式必须匹配，即类型和所需参数数量必须一致。例如，子类定义了一个可选参数，而父类抽象方法的声明里没有，则两者的声明并无冲突。 这也适用于 PHP 5.4 起的构造函数。在 PHP 5.4 之前的构造函数声明可以不一样的。</p>
-<h2 id="接口的定义">接口的定义</h2>
-<p>使用接口（interface），可以指定某个类必须实现哪些方法，但不需要定义这些方法的具体内容。<br>
-接口是通过 interface 关键字来定义的，就像定义一个标准的类一样，但其中定义所有的方法都是空的。<br>
-接口中定义的所有方法都必须是公有，这是接口的特性。</p>
-<h3 id="tips">TIPS</h3>
-<p>实现多个接口时，接口中的方法不能有重名。<br>
-接口也可以继承，通过使用 extends 操作符。<br>
-类要实现接口，必须使用和接口中所定义的方法完全一致的方式。否则会导致致命错误。<br>
-接口中也可以定义常量。接口常量和类常量的使用完全相同，但是不能被子类或子接口所覆盖。</p>
-<h2 id="抽象类和接口的区别">抽象类和接口的区别</h2>
-<p>对接口的继承使用implements,抽象类使用extends.<br>
-接口中不可以声明变量,但可以声明类常量.抽象类中可以声明各种变量<br>
-接口没有构造函数,抽象类可以有<br>
-接口中的方法默认为public,抽象类中的方法可以用public,protected,private修饰<br>
-一个类可以继承多个接口,但只能继承一个抽象类</p>
 ]]></content>
     </entry>
 </feed>

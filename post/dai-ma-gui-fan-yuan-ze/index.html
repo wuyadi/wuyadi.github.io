@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>phpexcel性能瓶颈及其优化 III | 一个兴趣使然的程序员</title>
+<title>代码规范原则 | 一个兴趣使然的程序员</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,12 +18,20 @@
 
 
 
-    <meta name="description" content="前情：
-再回头复查的时候，发现我始终局限于使用ExcelUtil或者 PhpSpreadsheet ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服务器的内存溢出。
-开始：
-有网友推荐使用
-..." />
-    <meta name="keywords" content="XLSXWriter,excel,php" />
+    <meta name="description" content="Keep it Simple and Stupid 原则
+
+
+在设计、制造当中以简约、简单为标准。因为简约、简单，才易于生产，易于维护，更易于操作
+
+
+要谦虚，不要认为自己是个天才
+
+
+将你的任务分解为4-12小时的子任务。
+
+
+把你的问题..." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
@@ -94,48 +102,63 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">phpexcel性能瓶颈及其优化 III</h2>
-            <div class="post-date">2020-03-22</div>
+            <h2 class="post-title">代码规范原则</h2>
+            <div class="post-date">2021-06-17</div>
             
-              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii.png')">
+              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/dai-ma-gui-fan-yuan-ze.png')">
               </div>
             
             <div class="post-content" v-pre>
-              <h3 id="前情">前情：</h3>
-<p>再回头复查的时候，发现我始终局限于使用ExcelUtil或者 <a href="https://phpspreadsheet.readthedocs.io/">PhpSpreadsheet</a> ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服务器的内存溢出。</p>
-<h3 id="开始">开始：</h3>
-<p>有网友推荐使用</p>
-<p>，有介绍说：<strong>Never run out of memory with PHPExcel again.</strong></p>
-<p>替换后，查看服务器资源占用，没有看到内存持续增长。</p>
-<h3 id="分析">分析：</h3>
-<p>XLSXWriter不是一直保存一个对象来进行增删改查，而是通过增量写文件的方式来进行excel的导出。所以不会随着导出的数据量增长，而占用更多的内存。</p>
-<h3 id="结论">结论：</h3>
-<p>在使用XLSXWriter替换导出组件之后，系统的导出时长完全受限于从数据库读取数据。这块就要从数据查询语句优化做起。</p>
+              <h3 id="keep-it-simple-and-stupid-原则">Keep it Simple and Stupid 原则</h3>
+<ul>
+<li>
+<p>在设计、制造当中以简约、简单为标准。因为简约、简单，才易于生产，易于维护，更易于操作</p>
+</li>
+<li>
+<p>要谦虚，不要认为自己是个天才</p>
+</li>
+<li>
+<p>将你的任务分解为4-12小时的子任务。</p>
+</li>
+<li>
+<p>把你的问题拆分成多个小问题。每个问题用一个或者很少的几个类来解决掉。</p>
+</li>
+<li>
+<p>保持你的方法足够小，每个方法永远不要超过30-40行代码。每个方法都应该只处理一个小小的问题，不要搞太多uses case进去。</p>
+</li>
+<li>
+<p>让你的类也小点，原则和上面的方法是一样的。</p>
+</li>
+<li>
+<p>先解决问题，然后开始编码。不要一边编码，一边解决问题。这样做也没什么错，但你有能力提前把事情切分成多个小的块，然后开始编码可能是比较好的。另外行数还不是为了衡量质量的标准，只是有个基本的尺子而已。</p>
+</li>
+<li>
+<p>不要害怕干掉代码。重构和重做是两个非常重要的方面。</p>
+</li>
+</ul>
+<h3 id="dry原则">DRY原则</h3>
+<p>Don't Repeat Yourself</p>
+<h3 id="组合原则">组合原则</h3>
+<p>设计时考虑拼接组合</p>
+<h3 id="通俗原则">通俗原则</h3>
+<p>接口设计避免标新立异</p>
+<h3 id="吝啬原则">吝啬原则</h3>
+<p>除非确无它法, 不要编写庞大的程序</p>
+<h3 id="透明性原则">透明性原则</h3>
+<p>设计要可见，以便审查和调试</p>
+<h3 id="补救原则">补救原则</h3>
+<p>出现异常时，马上退出并给出足够错误信息</p>
+<h3 id="缄默原则">缄默原则</h3>
+<p>如果一个程序没什么好说的，就沉默</p>
 
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://wuyadi.github.io/tag/Cgj5zKr2Y/" class="tag">
-                    XLSXWriter
-                  </a>
-                
-                  <a href="https://wuyadi.github.io/tag/vgdkEtpzM8/" class="tag">
-                    excel
-                  </a>
-                
-                  <a href="https://wuyadi.github.io/tag/3WTMsKTgK/" class="tag">
-                    php
-                  </a>
-                
-              </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-i/">
+                <a href="https://wuyadi.github.io/post/guan-yu-gao-ji-cheng-xu-yuan-de-si-kao-v_v/">
                   <h3 class="post-title">
-                    phpexcel性能瓶颈及其优化 II
+                    关于高级程序员的思考(ˇˍˇ)
                   </h3>
                 </a>
               </div>
