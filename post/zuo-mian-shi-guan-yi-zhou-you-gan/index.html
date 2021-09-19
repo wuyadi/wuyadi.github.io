@@ -1,106 +1,112 @@
+
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
+    
+<meta charset="utf-8" >
 
 <title>做面试官一周有感 | 一个兴趣使然的程序员</title>
+<meta name="description" content="知耻近乎勇">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1632036397651">
+<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1632036905287">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://wuyadi.github.io/styles/main.css">
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 
 
-    <meta name="description" content="因为公司在996之后，任务量还是没有完全的消化。领导决定给我们组添加两个同事儿，然后让我作为初面面试官。然后我开始了诚惶诚恐的面试官体验。
-首先是简历的筛选，真的是五味杂陈。
-
-有的同学写了很多公司的项目，但是通篇都是业务的内容，没有体现自..." />
-    <meta name="keywords" content="面试,随笔" />
   </head>
   <body>
     <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://wuyadi.github.io">
-        <img src="https://wuyadi.github.io/images/avatar.png?v=1632036397651" class="site-logo">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://wuyadi.github.io">
+        <img class="avatar" src="https://wuyadi.github.io/images/avatar.png?v=1632036905287" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://wuyadi.github.io">
         <h1 class="site-title">一个兴趣使然的程序员</h1>
       </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
     </div>
-    <div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
       
         
-          <a href="/" class="site-nav">
+          <a href="/" class="menu purple-link">
             首页
           </a>
         
       
         
-          <a href="/archives" class="site-nav">
+          <a href="/archives" class="menu purple-link">
             归档
           </a>
         
       
         
-          <a href="/tags" class="site-nav">
+          <a href="/tags" class="menu purple-link">
             标签
           </a>
         
       
         
-          <a href="/post/about" class="site-nav">
+          <a href="/post/about" class="menu purple-link">
             关于
           </a>
         
       
     </div>
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      知耻近乎勇
-    </div>
-    <div class="site-footer">
-       | <a class="rss" href="https://wuyadi.github.io/atom.xml" target="_blank">RSS</a>
-    </div>
-  </div>
-</div>
+</transition>
 
 
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">做面试官一周有感</h2>
-            <div class="post-date">2020-09-18</div>
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/zuo-mian-shi-guan-yi-zhou-you-gan.jpg')">
+            </div>
+          
+          <h2 class="post-title">做面试官一周有感</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2020-09-18</span>
             
-              <div class="feature-container" style="background-image: url('https://wuyadi.github.io/post-images/zuo-mian-shi-guan-yi-zhou-you-gan.jpg')">
-              </div>
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://wuyadi.github.io/tag/l-ypQzqK7/">
+                    面试
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://wuyadi.github.io/tag/miO2Lc0qGb/">
+                    随笔
+                    
+                  </a>
+                
+              </span>
             
-            <div class="post-content" v-pre>
-              <p>因为公司在996之后，任务量还是没有完全的消化。领导决定给我们组添加两个同事儿，然后让我作为初面面试官。然后我开始了诚惶诚恐的面试官体验。</p>
+          </div>
+          <div class="post-content">
+            <p>因为公司在996之后，任务量还是没有完全的消化。领导决定给我们组添加两个同事儿，然后让我作为初面面试官。然后我开始了诚惶诚恐的面试官体验。</p>
 <p>首先是简历的筛选，真的是五味杂陈。</p>
 <ul>
 <li>有的同学写了很多公司的项目，但是通篇都是业务的内容，没有体现自己在团队中的作用，没有表达出自己做了什么；</li>
@@ -111,43 +117,45 @@
 <p>最后有很多phper对于代码，对于作品没有追求的程序员是没有追求的，这样无疑很可怕，他产出的代码估计后期需要更多的同事去维护。</p>
 <h5 id="以人为鉴可以知得失-争取在以后的工作和生活中不要犯以上的这种错误小错误啊">以人为鉴,可以知得失。争取在以后的工作和生活中不要犯以上的这种错误，小错误啊。</h5>
 
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://wuyadi.github.io/tag/l-ypQzqK7/" class="tag">
-                    面试
-                  </a>
-                
-                  <a href="https://wuyadi.github.io/tag/miO2Lc0qGb/" class="tag">
-                    随笔
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://wuyadi.github.io/post/php-dao-chu-zui-zhong-zhang/">
-                  <h3 class="post-title">
-                    php导出最终章
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-
           </div>
-
         </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://wuyadi.github.io/post/php-dao-chu-zui-zhong-zhang/">
+              <h3 class="post-title">
+                下一篇：php导出最终章
+              </h3>
+            </a>
+          </div>
+          
       </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">知耻近乎勇</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://wuyadi.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
     </div>
+    <script type="application/javascript">
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script type="application/javascript">
-
-AOS.init();
+hljs.initHighlightingOnLoad()
 
 var app = new Vue({
   el: '#app',
@@ -157,8 +165,6 @@ var app = new Vue({
 })
 
 </script>
-
-
 
 
 
