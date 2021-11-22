@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>一个兴趣使然的程序员</title>
-    <updated>2021-09-19T07:35:22.939Z</updated>
+    <updated>2021-11-22T12:21:38.051Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
@@ -10,6 +10,392 @@
     <logo>https://wuyadi.github.io/images/avatar.png</logo>
     <icon>https://wuyadi.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 一个兴趣使然的程序员</rights>
+    <entry>
+        <title type="html"><![CDATA[用python脚本删除无效redis key]]></title>
+        <id>https://wuyadi.github.io/post/yong-python-jiao-ben-shan-chu-wu-xiao-redis-key/</id>
+        <link href="https://wuyadi.github.io/post/yong-python-jiao-ben-shan-chu-wu-xiao-redis-key/">
+        </link>
+        <updated>2021-11-22T11:39:23.000Z</updated>
+        <summary type="html"><![CDATA[<p>这天运维找我反馈说zgyh这个客户的redis内存越来越高，让我们先自查下是否有程序不合理的一直往redis写key。在排查了java go python 和php 的代码后，我信心满满的给了他一个key的列表和统计计数的脚本。</p>
+<pre><code class="language-shell">#!/bin/bash
+
+A=$0
+B=${A##*/}
+C=${B%.*}
+running_file_name=$C
+running_flag=&quot;run.$running_file_name&quot;
+
+REDIS_CLIENT='redis-cli -a xxxx -x'
+function process {
+    echo $0
+    index=-1
+    count=0
+    step=100000
+    while ((index!=0))
+    do
+      if [ $index -le 0 ];then
+        index=0
+      fi
+      echo &quot;scan $index match $1 count $step&quot; | $REDIS_CLIENT &gt; $running_file_name.cache
+      read index &lt;&lt;&lt; `head -1 $running_file_name.cache`
+      read inc &lt;&lt;&lt; `cat $running_file_name.cache | wc -l`
+      inc=$((inc - 1))
+      if [ $? -ne 0 ];then
+        break
+      fi
+      count=$((count + inc))
+    done
+    echo &quot;$1 count:&quot;$count
+}
+#
+if [ $# -ne 1 ];then
+    echo &quot;$0 &lt;pars&gt;&quot;
+    exit 0
+fi
+#
+if [ -f &quot;$running_flag&quot; ] ; then
+    echo &quot;is running...&quot;
+    exit 0
+fi
+#
+touch $running_flag
+#
+echo &quot;processing....&quot;
+echo $*
+process $*
+#
+rm -rf $running_flag
+#
+echo &quot;ok!&quot;
+</code></pre>
+<p>和查bigkey的方法</p>
+<pre><code class="language-shell">redis-cli -c -p 6379  -a 密码  --bigkeys 
+</code></pre>
+<p>运维反馈bigkeys因为版本问题访问不了，根据我提供的业务key查的数量最大的也就W。但是现在生产的key已经达到了几百W。</p>
+<p>过了几天，运维反馈说找到了那些幽灵的key，是32位的随机字幕+数字，没有赋值，最要命的是没有设置过期时间且确定是从我们的服务机器发出的请求。</p>
+<p>再次走查代码，依旧没有头绪，测试环境的redis环境也没有这些奇怪的key。殚思竭虑两天后，猛地想起这个数据格式和php的session_id很类似。于是检查php的入口方法，果然找到问题。</p>
+<pre><code class="language-php">        $time = $this-&gt;isSession();
+        if ($this-&gt;skipCheck) return true;
+</code></pre>
+<p>这个isSession方法</p>
+<pre><code class="language-php">    protected function isSession() {
+        if ($this-&gt;AccessField == 'FILE') {
+            return $this-&gt;isFSession();
+        } else {
+            return $this-&gt;isRSession();
+        }
+    }
+</code></pre>
+<p>在类型不是FILE的情况下会走isRSession</p>
+<pre><code class="language-php">    private function isRSession() {
+        $PHPSESSID = $_COOKIE['PHPSESSID'];
+        if (empty($PHPSESSID)) {
+            return;
+        }
+
+        $data = S($PHPSESSID);
+
+        if (empty($data)) {
+            return;
+        }
+        /*从缓存服务器同步到本地*/
+        if ($data['SYNCH']) {
+            $data = array(
+                &quot;DATA&quot; =&gt; $data['DATA'],
+                &quot;EXPIRE&quot; =&gt; time(),
+                &quot;REGIST&quot; =&gt; time()
+            );
+            $data['SYNCH'] = false;
+            /*更新缓存服务器状态*/
+        }
+
+        if (!empty($_SESSION[$this-&gt;AccessName])) {
+            /*已同步到现在的服务器上*/
+            return $_SESSION[$this-&gt;AccessName]['EXPIRE'];
+        }
+
+    }
+</code></pre>
+<p>问题就出在S($PHPSESSID)这句，S方法内容如下</p>
+<pre><code class="language-php">function S($name,$value='',$options=null) {
+    static $cache   =   '';
+    if(strtoupper(C('DATA_CACHE_TYPE')) == 'REDISMS'){
+        $cache = Think\Cache\Driver\Redisms::getInstance();
+        if(''=== $value){ // 获取缓存
+            return $cache-&gt;get($name);
+        }elseif(is_null($value)) { // 删除缓存
+            return $cache-&gt;rm($name);
+        }else{
+            if(is_array($options)) {
+                $expire     =   isset($options['expire'])?$options['expire']:NULL;
+            }else{
+                $expire     =   is_numeric($options)?$options:NULL;
+            }
+            return $cache-&gt;set($name, $value, $expire);
+        }
+    }
+
+    if(is_array($options)){
+        // 缓存操作的同时初始化
+        $type       =   isset($options['type'])?$options['type']:'';
+        $cache      =   Think\Cache::getInstance($type,$options);
+    }elseif(is_array($name)) { // 缓存初始化
+        $type       =   isset($name['type'])?$name['type']:'';
+        $cache      =   Think\Cache::getInstance($type,$name);
+        return $cache;
+    }elseif(empty($cache)) { // 自动初始化
+        $cache      =   Think\Cache::getInstance();
+    }
+    if(''=== $value){ // 获取缓存
+        return $cache-&gt;get($name);
+    }elseif(is_null($value)) { // 删除缓存
+        return $cache-&gt;rm($name);
+    }else { // 缓存数据
+        if(is_array($options)) {
+            $expire     =   isset($options['expire'])?$options['expire']:NULL;
+        }else{
+            $expire     =   is_numeric($options)?$options:NULL;
+        }
+        return $cache-&gt;set($name, $value, $expire);
+    }
+}
+</code></pre>
+<p>坏就坏在这边没有缓存会去set Memcache.class.php创建缓存的代码;</p>
+<pre><code class="language-php">	public function write($sessID, $sessData) {
+		return $this-&gt;handle-&gt;set($this-&gt;sessionName.$sessID, $sessData, 0, $this-&gt;lifeTime);
+	}
+</code></pre>
+<p>$this-&gt;lifeTime取得</p>
+<pre><code class="language-php">protected $lifeTime     = 3600;
+	protected $sessionName  = '';
+	protected $handle       = null;
+
+    /**
+     * 打开Session 
+     * @access public 
+     * @param string $savePath 
+     * @param mixed $sessName  
+     */
+	public function open($savePath, $sessName) {
+		$this-&gt;lifeTime     = C('SESSION_EXPIRE') ? C('SESSION_EXPIRE') : $this-&gt;lifeTime;
+</code></pre>
+<p>好死不死，配置中SESSION_EXPIRE是0。所以<strong>改配置中SESSION_EXPIRE，确保后续数据的及时清理。</strong></p>
+<p>但是之前redis中key怎么清理呢。找了下轮子没有现成的，写了一个python 的脚本</p>
+<pre><code class="language-python">import redis
+
+# 匹配test:开头[0-9]结尾的key
+prefix = '*'
+conn = redis.Redis(host = '172.20.199.5', port=6379, password=&quot;***&quot;)
+i = 0
+s = 0
+for key in conn.scan_iter(match=prefix, count=1000):
+    ttltime = conn.ttl(key)
+    i = i + 1
+    if( (ttltime is None or ttltime == -1) and len(key) == 32 and conn.type(key).decode() == 'string' and not conn.get(key)):
+        # 删除匹配到的没有过期时间的key
+        print(key, ' - value =', conn.get(key))       
+        print(key, ' - key =', conn.type(key))
+        conn.delete(key)
+        s = s + 1
+        print(key, ' - del number=', s)
+        
+
+print('total key', i,' -&gt; del ',s)
+
+</code></pre>
+<p>完美</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>这天运维找我反馈说zgyh这个客户的redis内存越来越高，让我们先自查下是否有程序不合理的一直往redis写key。在排查了java go python 和php 的代码后，我信心满满的给了他一个key的列表和统计计数的脚本。</p>
+<pre><code class="language-shell">#!/bin/bash
+
+A=$0
+B=${A##*/}
+C=${B%.*}
+running_file_name=$C
+running_flag=&quot;run.$running_file_name&quot;
+
+REDIS_CLIENT='redis-cli -a xxxx -x'
+function process {
+    echo $0
+    index=-1
+    count=0
+    step=100000
+    while ((index!=0))
+    do
+      if [ $index -le 0 ];then
+        index=0
+      fi
+      echo &quot;scan $index match $1 count $step&quot; | $REDIS_CLIENT &gt; $running_file_name.cache
+      read index &lt;&lt;&lt; `head -1 $running_file_name.cache`
+      read inc &lt;&lt;&lt; `cat $running_file_name.cache | wc -l`
+      inc=$((inc - 1))
+      if [ $? -ne 0 ];then
+        break
+      fi
+      count=$((count + inc))
+    done
+    echo &quot;$1 count:&quot;$count
+}
+#
+if [ $# -ne 1 ];then
+    echo &quot;$0 &lt;pars&gt;&quot;
+    exit 0
+fi
+#
+if [ -f &quot;$running_flag&quot; ] ; then
+    echo &quot;is running...&quot;
+    exit 0
+fi
+#
+touch $running_flag
+#
+echo &quot;processing....&quot;
+echo $*
+process $*
+#
+rm -rf $running_flag
+#
+echo &quot;ok!&quot;
+</code></pre>
+<p>和查bigkey的方法</p>
+<pre><code class="language-shell">redis-cli -c -p 6379  -a 密码  --bigkeys 
+</code></pre>
+<p>运维反馈bigkeys因为版本问题访问不了，根据我提供的业务key查的数量最大的也就W。但是现在生产的key已经达到了几百W。</p>
+<p>过了几天，运维反馈说找到了那些幽灵的key，是32位的随机字幕+数字，没有赋值，最要命的是没有设置过期时间且确定是从我们的服务机器发出的请求。</p>
+<p>再次走查代码，依旧没有头绪，测试环境的redis环境也没有这些奇怪的key。殚思竭虑两天后，猛地想起这个数据格式和php的session_id很类似。于是检查php的入口方法，果然找到问题。</p>
+<pre><code class="language-php">        $time = $this-&gt;isSession();
+        if ($this-&gt;skipCheck) return true;
+</code></pre>
+<p>这个isSession方法</p>
+<pre><code class="language-php">    protected function isSession() {
+        if ($this-&gt;AccessField == 'FILE') {
+            return $this-&gt;isFSession();
+        } else {
+            return $this-&gt;isRSession();
+        }
+    }
+</code></pre>
+<p>在类型不是FILE的情况下会走isRSession</p>
+<pre><code class="language-php">    private function isRSession() {
+        $PHPSESSID = $_COOKIE['PHPSESSID'];
+        if (empty($PHPSESSID)) {
+            return;
+        }
+
+        $data = S($PHPSESSID);
+
+        if (empty($data)) {
+            return;
+        }
+        /*从缓存服务器同步到本地*/
+        if ($data['SYNCH']) {
+            $data = array(
+                &quot;DATA&quot; =&gt; $data['DATA'],
+                &quot;EXPIRE&quot; =&gt; time(),
+                &quot;REGIST&quot; =&gt; time()
+            );
+            $data['SYNCH'] = false;
+            /*更新缓存服务器状态*/
+        }
+
+        if (!empty($_SESSION[$this-&gt;AccessName])) {
+            /*已同步到现在的服务器上*/
+            return $_SESSION[$this-&gt;AccessName]['EXPIRE'];
+        }
+
+    }
+</code></pre>
+<p>问题就出在S($PHPSESSID)这句，S方法内容如下</p>
+<pre><code class="language-php">function S($name,$value='',$options=null) {
+    static $cache   =   '';
+    if(strtoupper(C('DATA_CACHE_TYPE')) == 'REDISMS'){
+        $cache = Think\Cache\Driver\Redisms::getInstance();
+        if(''=== $value){ // 获取缓存
+            return $cache-&gt;get($name);
+        }elseif(is_null($value)) { // 删除缓存
+            return $cache-&gt;rm($name);
+        }else{
+            if(is_array($options)) {
+                $expire     =   isset($options['expire'])?$options['expire']:NULL;
+            }else{
+                $expire     =   is_numeric($options)?$options:NULL;
+            }
+            return $cache-&gt;set($name, $value, $expire);
+        }
+    }
+
+    if(is_array($options)){
+        // 缓存操作的同时初始化
+        $type       =   isset($options['type'])?$options['type']:'';
+        $cache      =   Think\Cache::getInstance($type,$options);
+    }elseif(is_array($name)) { // 缓存初始化
+        $type       =   isset($name['type'])?$name['type']:'';
+        $cache      =   Think\Cache::getInstance($type,$name);
+        return $cache;
+    }elseif(empty($cache)) { // 自动初始化
+        $cache      =   Think\Cache::getInstance();
+    }
+    if(''=== $value){ // 获取缓存
+        return $cache-&gt;get($name);
+    }elseif(is_null($value)) { // 删除缓存
+        return $cache-&gt;rm($name);
+    }else { // 缓存数据
+        if(is_array($options)) {
+            $expire     =   isset($options['expire'])?$options['expire']:NULL;
+        }else{
+            $expire     =   is_numeric($options)?$options:NULL;
+        }
+        return $cache-&gt;set($name, $value, $expire);
+    }
+}
+</code></pre>
+<p>坏就坏在这边没有缓存会去set Memcache.class.php创建缓存的代码;</p>
+<pre><code class="language-php">	public function write($sessID, $sessData) {
+		return $this-&gt;handle-&gt;set($this-&gt;sessionName.$sessID, $sessData, 0, $this-&gt;lifeTime);
+	}
+</code></pre>
+<p>$this-&gt;lifeTime取得</p>
+<pre><code class="language-php">protected $lifeTime     = 3600;
+	protected $sessionName  = '';
+	protected $handle       = null;
+
+    /**
+     * 打开Session 
+     * @access public 
+     * @param string $savePath 
+     * @param mixed $sessName  
+     */
+	public function open($savePath, $sessName) {
+		$this-&gt;lifeTime     = C('SESSION_EXPIRE') ? C('SESSION_EXPIRE') : $this-&gt;lifeTime;
+</code></pre>
+<p>好死不死，配置中SESSION_EXPIRE是0。所以<strong>改配置中SESSION_EXPIRE，确保后续数据的及时清理。</strong></p>
+<p>但是之前redis中key怎么清理呢。找了下轮子没有现成的，写了一个python 的脚本</p>
+<pre><code class="language-python">import redis
+
+# 匹配test:开头[0-9]结尾的key
+prefix = '*'
+conn = redis.Redis(host = '172.20.199.5', port=6379, password=&quot;***&quot;)
+i = 0
+s = 0
+for key in conn.scan_iter(match=prefix, count=1000):
+    ttltime = conn.ttl(key)
+    i = i + 1
+    if( (ttltime is None or ttltime == -1) and len(key) == 32 and conn.type(key).decode() == 'string' and not conn.get(key)):
+        # 删除匹配到的没有过期时间的key
+        print(key, ' - value =', conn.get(key))       
+        print(key, ' - key =', conn.type(key))
+        conn.delete(key)
+        s = s + 1
+        print(key, ' - del number=', s)
+        
+
+print('total key', i,' -&gt; del ',s)
+
+</code></pre>
+<p>完美</p>
+<!-- more -->
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[陈年喜 ·《双鱼铜镜》]]></title>
         <id>https://wuyadi.github.io/post/chen-nian-xi-lesslessshuang-yu-tong-jing-greatergreater/</id>
@@ -374,24 +760,6 @@ workbook.close()
 <p>经测试导出数据20W条数据只需要10分钟</p>
 <h3 id="结论">结论：</h3>
 <p>在觉得做到的最优解的时候，换个思路，跳出僵化思维，或许会有意外的收获。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[phpexcel性能瓶颈及其优化 III]]></title>
-        <id>https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/</id>
-        <link href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/">
-        </link>
-        <updated>2020-03-22T12:05:39.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="前情">前情：</h3>
-<p>再回头复查的时候，发现我始终局限于使用ExcelUtil或者 <a href="https://phpspreadsheet.readthedocs.io/">PhpSpreadsheet</a> ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服务器的内存溢出。</p>
-<h3 id="开始">开始：</h3>
-<p>有网友推荐使用</p>
-<p>，有介绍说：<strong>Never run out of memory with PHPExcel again.</strong></p>
-<p>替换后，查看服务器资源占用，没有看到内存持续增长。</p>
-<h3 id="分析">分析：</h3>
-<p>XLSXWriter不是一直保存一个对象来进行增删改查，而是通过增量写文件的方式来进行excel的导出。所以不会随着导出的数据量增长，而占用更多的内存。</p>
-<h3 id="结论">结论：</h3>
-<p>在使用XLSXWriter替换导出组件之后，系统的导出时长完全受限于从数据库读取数据。这块就要从数据查询语句优化做起。</p>
 ]]></content>
     </entry>
 </feed>
