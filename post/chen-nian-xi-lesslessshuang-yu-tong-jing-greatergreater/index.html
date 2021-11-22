@@ -1,92 +1,110 @@
-
 <!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
+    <meta charset="utf-8" >
 
 <title>陈年喜 ·《双鱼铜镜》 | 一个兴趣使然的程序员</title>
-<meta name="description" content="知耻近乎勇">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1637583762771">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1637583901704">
 <link rel="stylesheet" href="https://wuyadi.github.io/styles/main.css">
 
 
 
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 
 
+    <meta name="description" content="这面铜镜据说产自金代
+它有着北方浓烈的质地
+两尾鲤鱼一直活着
+它们游向恩爱 游向朝代深处
+它曾经悬于闺室
+映过一张姣好的颜容
+她的亲人耽于征战
+策马长城 或埋骨于雨定河边
+如今 一面镜子沉默不语
+它一路经过的村庄 风雨 兴亡
+被穿窗而至的一..." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://wuyadi.github.io">
-        <img class="avatar" src="https://wuyadi.github.io/images/avatar.png?v=1637583762771" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://wuyadi.github.io">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wuyadi.github.io">
+        <img src="https://wuyadi.github.io/images/avatar.png?v=1637583901704" class="site-logo">
         <h1 class="site-title">一个兴趣使然的程序员</h1>
       </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
     </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
-  </div>
-</div>
-
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
+    <div>
       
         
-          <a href="/" class="menu purple-link">
+          <a href="/" class="site-nav">
             首页
           </a>
         
       
         
-          <a href="/archives" class="menu purple-link">
+          <a href="/archives" class="site-nav">
             归档
           </a>
         
       
         
-          <a href="/tags" class="menu purple-link">
+          <a href="/tags" class="site-nav">
             标签
           </a>
         
       
         
-          <a href="/post/about" class="menu purple-link">
+          <a href="/post/about" class="site-nav">
             关于
           </a>
         
       
     </div>
   </div>
-</transition>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      知耻近乎勇
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://wuyadi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
 
 
-      <div class="content-container">
-        <div class="post-detail">
-          
-          <h2 class="post-title">陈年喜 ·《双鱼铜镜》</h2>
-          <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2021-09-16</span>
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">陈年喜 ·《双鱼铜镜》</h2>
+            <div class="post-date">2021-09-16</div>
             
-          </div>
-          <div class="post-content">
-            <p>这面铜镜据说产自金代</p>
+            <div class="post-content" v-pre>
+              <p>这面铜镜据说产自金代</p>
 <p>它有着北方浓烈的质地</p>
 <p>两尾鲤鱼一直活着</p>
 <p>它们游向恩爱 游向朝代深处</p>
@@ -113,45 +131,31 @@
 <p>当你试图解下某些渴意</p>
 <p>它正好映见门前的井水</p>
 
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://wuyadi.github.io/post/di-xiao-neng-cheng-xu-yuan-de-xing-wei-yu-si-wei-gong-mian/">
+                  <h3 class="post-title">
+                    低效能程序员的行为与思维，共勉
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
           </div>
+
         </div>
-
-        
-          <div class="next-post">
-            <a class="purple-link" href="https://wuyadi.github.io/post/di-xiao-neng-cheng-xu-yuan-de-xing-wei-yu-si-wei-gong-mian/">
-              <h3 class="post-title">
-                下一篇：低效能程序员的行为与思维，共勉
-              </h3>
-            </a>
-          </div>
-          
       </div>
-
-      
-
-      <div class="site-footer">
-  <div class="slogan">知耻近乎勇</div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-   | <a class="rss" href="https://wuyadi.github.io/atom.xml" target="_blank">RSS</a>
-</div>
-
-
     </div>
-    <script type="application/javascript">
 
-hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
 
 var app = new Vue({
   el: '#app',
@@ -161,6 +165,8 @@ var app = new Vue({
 })
 
 </script>
+
+
 
 
 

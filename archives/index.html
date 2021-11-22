@@ -1,364 +1,349 @@
+<!DOCTYPE html>
 <html>
   <head>
-    
-<meta charset="utf-8" >
+    <meta charset="utf-8" >
 
-<title>一个兴趣使然的程序员</title>
-<meta name="description" content="知耻近乎勇">
+<title>文章归档 | 一个兴趣使然的程序员</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1637583762771">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1637583901704">
 <link rel="stylesheet" href="https://wuyadi.github.io/styles/main.css">
 
 
 
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 
 
+    <meta name="description" content="知耻近乎勇">
   </head>
   <body>
     <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://wuyadi.github.io">
-        <img class="avatar" src="https://wuyadi.github.io/images/avatar.png?v=1637583762771" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://wuyadi.github.io">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://wuyadi.github.io">
+        <img src="https://wuyadi.github.io/images/avatar.png?v=1637583901704" class="site-logo">
         <h1 class="site-title">一个兴趣使然的程序员</h1>
       </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
     </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
-  </div>
-</div>
-
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
+    <div>
       
         
-          <a href="/" class="menu purple-link">
+          <a href="/" class="site-nav">
             首页
           </a>
         
       
         
-          <a href="/archives" class="menu purple-link">
+          <a href="/archives" class="site-nav">
             归档
           </a>
         
       
         
-          <a href="/tags" class="menu purple-link">
+          <a href="/tags" class="site-nav">
             标签
           </a>
         
       
         
-          <a href="/post/about" class="menu purple-link">
+          <a href="/post/about" class="site-nav">
             关于
           </a>
         
       
     </div>
   </div>
-</transition>
-
-
-        <div class="content-container">
-          
-          
-
-<div class="archives-container">
-  
-    <h2 class="year">2021</h2>
-    
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
       
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/yong-python-jiao-ben-shan-chu-wu-xiao-redis-key/">
-            <h2 class="post-title">
-              用python脚本删除无效redis key
-              <small>2021-11-22</small>
-            </h2>
-          </a>
-        </article>
+        
       
-    
+        
       
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/chen-nian-xi-lesslessshuang-yu-tong-jing-greatergreater/">
-            <h2 class="post-title">
-              陈年喜 ·《双鱼铜镜》
-              <small>2021-09-16</small>
-            </h2>
-          </a>
-        </article>
+        
       
-    
+        
       
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/di-xiao-neng-cheng-xu-yuan-de-xing-wei-yu-si-wei-gong-mian/">
-            <h2 class="post-title">
-              低效能程序员的行为与思维，共勉
-              <small>2021-09-11</small>
-            </h2>
-          </a>
-        </article>
+        
       
-    
-      
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/with-great-power-comes-great-responsibility/">
-            <h2 class="post-title">
-              With great power comes great responsibility
-              <small>2021-08-30</small>
-            </h2>
-          </a>
-        </article>
-      
-    
-      
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/dai-ma-gui-fan-yuan-ze/">
-            <h2 class="post-title">
-              代码规范原则
-              <small>2021-06-17</small>
-            </h2>
-          </a>
-        </article>
-      
-    
-      
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/guan-yu-gao-ji-cheng-xu-yuan-de-si-kao-v_v/">
-            <h2 class="post-title">
-              关于高级程序员的思考(ˇˍˇ)
-              <small>2021-03-12</small>
-            </h2>
-          </a>
-        </article>
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  
-    <h2 class="year">2020</h2>
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/zuo-mian-shi-guan-yi-zhou-you-gan/">
-            <h2 class="post-title">
-              做面试官一周有感
-              <small>2020-09-18</small>
-            </h2>
-          </a>
-        </article>
-      
-    
-      
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/php-dao-chu-zui-zhong-zhang/">
-            <h2 class="post-title">
-              php导出最终章
-              <small>2020-09-11</small>
-            </h2>
-          </a>
-        </article>
-      
-    
-      
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/qi-guai-de-bug/">
-            <h2 class="post-title">
-              奇怪的bug
-              <small>2020-07-23</small>
-            </h2>
-          </a>
-        </article>
-      
-    
-      
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/">
-            <h2 class="post-title">
-              从PHP到GO之导出数据
-              <small>2020-03-25</small>
-            </h2>
-          </a>
-        </article>
-      
-    
-      
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/">
-            <h2 class="post-title">
-              phpexcel性能瓶颈及其优化 III
-              <small>2020-03-22</small>
-            </h2>
-          </a>
-        </article>
-      
-    
-      
-    
-      
-    
-      
-    
-  
-    <h2 class="year">2019</h2>
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-i/">
-            <h2 class="post-title">
-              phpexcel性能瓶颈及其优化 II
-              <small>2019-07-11</small>
-            </h2>
-          </a>
-        </article>
-      
-    
-      
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/">
-            <h2 class="post-title">
-              phpexcel性能瓶颈及其优化 I
-              <small>2019-02-02</small>
-            </h2>
-          </a>
-        </article>
-      
-    
-      
-    
-  
-    <h2 class="year">2018</h2>
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-        <article class="post">
-          <a href="https://wuyadi.github.io/post/chou-xiang-lei-jie-kou-de-ding-yi-qu-bie-he-shi-yong-chang-jing/">
-            <h2 class="post-title">
-              抽象类、接口的定义、区别和使用场景
-              <small>2018-09-09</small>
-            </h2>
-          </a>
-        </article>
-      
-    
-  
+    </div>
+    <div class="site-description">
+      知耻近乎勇
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://wuyadi.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
 </div>
 
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          
+
+          <h2 class="archives-title">文章归档</h2>
+          <div class="archives-container">
+            
+              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2021</h2>
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/yong-python-jiao-ben-shan-chu-wu-xiao-redis-key/">
+                      <h2 class="post-title">
+                        用python脚本删除无效redis key
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/chen-nian-xi-lesslessshuang-yu-tong-jing-greatergreater/">
+                      <h2 class="post-title">
+                        陈年喜 ·《双鱼铜镜》
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/di-xiao-neng-cheng-xu-yuan-de-xing-wei-yu-si-wei-gong-mian/">
+                      <h2 class="post-title">
+                        低效能程序员的行为与思维，共勉
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/with-great-power-comes-great-responsibility/">
+                      <h2 class="post-title">
+                        With great power comes great responsibility
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/dai-ma-gui-fan-yuan-ze/">
+                      <h2 class="post-title">
+                        代码规范原则
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/guan-yu-gao-ji-cheng-xu-yuan-de-si-kao-v_v/">
+                      <h2 class="post-title">
+                        关于高级程序员的思考(ˇˍˇ)
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+            
+              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2020</h2>
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/zuo-mian-shi-guan-yi-zhou-you-gan/">
+                      <h2 class="post-title">
+                        做面试官一周有感
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/php-dao-chu-zui-zhong-zhang/">
+                      <h2 class="post-title">
+                        php导出最终章
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/qi-guai-de-bug/">
+                      <h2 class="post-title">
+                        奇怪的bug
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/">
+                      <h2 class="post-title">
+                        从PHP到GO之导出数据
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/">
+                      <h2 class="post-title">
+                        phpexcel性能瓶颈及其优化 III
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+              
+                
+              
+                
+              
+            
+              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2019</h2>
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-i/">
+                      <h2 class="post-title">
+                        phpexcel性能瓶颈及其优化 II
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/">
+                      <h2 class="post-title">
+                        phpexcel性能瓶颈及其优化 I
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+                
+              
+            
+              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2018</h2>
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                  <article class="post">
+                    <a href="https://wuyadi.github.io/post/chou-xiang-lei-jie-kou-de-ding-yi-qu-bie-he-shi-yong-chang-jing/">
+                      <h2 class="post-title">
+                        抽象类、接口的定义、区别和使用场景
+                      </h2>
+                    </a>
+                  </article>
+                
+              
+            
+          </div>
+
+          <div class="pagination-container">
+  
+  
+</div>
 
         </div>
-
-        <div class="site-footer">
-  <div class="slogan">知耻近乎勇</div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-   | <a class="rss" href="https://wuyadi.github.io/atom.xml" target="_blank">RSS</a>
-</div>
-
-
       </div>
-      <script type="application/javascript">
+    </div>
 
-hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
 
 var app = new Vue({
   el: '#app',
@@ -372,6 +357,7 @@ var app = new Vue({
 
 
 
-    </div>
+
+
   </body>
 </html>
