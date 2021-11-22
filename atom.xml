@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>一个兴趣使然的程序员</title>
-    <updated>2021-11-22T12:39:10.998Z</updated>
+    <updated>2021-11-22T12:54:12.746Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
@@ -395,7 +395,6 @@ print('total key', i,' -&gt; del ',s)
 
 </code></pre>
 <p>完美。今天小雪 晚来天欲雪，能饮一杯无？</p>
-<!-- more -->
 ]]></content>
     </entry>
     <entry>
@@ -404,33 +403,6 @@ print('total key', i,' -&gt; del ',s)
         <link href="https://wuyadi.github.io/post/chen-nian-xi-lesslessshuang-yu-tong-jing-greatergreater/">
         </link>
         <updated>2021-09-16T01:24:03.000Z</updated>
-        <content type="html"><![CDATA[<p>这面铜镜据说产自金代</p>
-<p>它有着北方浓烈的质地</p>
-<p>两尾鲤鱼一直活着</p>
-<p>它们游向恩爱 游向朝代深处</p>
-<p>它曾经悬于闺室</p>
-<p>映过一张姣好的颜容</p>
-<p>她的亲人耽于征战</p>
-<p>策马长城 或埋骨于雨定河边</p>
-<p>如今 一面镜子沉默不语</p>
-<p>它一路经过的村庄 风雨 兴亡</p>
-<p>被穿窗而至的一缕晨光再次照见</p>
-<p>我曾经查阅过史籍</p>
-<p>知道铜在商代已有冶炼</p>
-<p>这也说明至金代 铜早已如火纯青</p>
-<p>在这面镜子的某处斑点上</p>
-<p>我还是看见了疼痛的瑕疵</p>
-<p>河山易碎 人世多苦</p>
-<p>注浆的一瞬 那被炭火灼烤的人</p>
-<p>从眼里滴下了一滴铸浆</p>
-<p>不要向沉默之物询问何以沉默</p>
-<p>不要打听荻花雪白的缘由</p>
-<p>飘泊的人 被天涯所累的人</p>
-<p>你要保护好体内古老的铜镜</p>
-<p>我们在暗处 它在明处</p>
-<p>当你试图解下某些渴意</p>
-<p>它正好映见门前的井水</p>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[低效能程序员的行为与思维，共勉]]></title>
@@ -438,41 +410,6 @@ print('total key', i,' -&gt; del ',s)
         <link href="https://wuyadi.github.io/post/di-xiao-neng-cheng-xu-yuan-de-xing-wei-yu-si-wei-gong-mian/">
         </link>
         <updated>2021-09-11T08:44:32.000Z</updated>
-        <content type="html"><![CDATA[<ol>
-<li><strong>不写单元测试</strong>。</li>
-<li>不主动学习，<strong>不看书</strong>。</li>
-<li><strong>总是拿没时间作为借口</strong>。</li>
-<li>不会做任务拆解，也没有记录拆解的任务。</li>
-<li>做事没耐心。</li>
-<li>不 Review 自己的代码，做过的事情，犯的错误。</li>
-<li>从不了解架构，不了解设计（设计就是架构）。</li>
-<li>不了解<strong>敏捷开发</strong>，更没有想了解的意愿，也不会去实施。Scrum Standup 、Kanban Board 是能提高工作效率的。</li>
-<li>喜欢埋怨别人，说在公司学不到技术，也不积极主动学习。</li>
-<li>认为重复的 CRUD 很无趣，总想着换个工作能好点。</li>
-<li>对每天做的事情不做记录。这里不是指日报，这里指的是你对每天工作是否有计划，将大的任务，拆成足够小的子任务。按优先级，有次序得完成任务。</li>
-<li>喜欢口述需求，不做文本化记录、转达。来自同事</li>
-<li>喜欢 “多线程” 处理任务。也就是同时做多件事。</li>
-<li>命名无关紧要。</li>
-<li>从不重构以前的代码。</li>
-<li>喜欢一个方法写一大段代码。</li>
-<li>对自己的代码质量没有追求。没有匠心精神，只是个开发（ Developer ），而不是工程师（ Engineer ）。</li>
-<li>和上面一样，认为敲代码来钱快，觉得以后要转其他职业的。来自以前的一些同事。</li>
-<li>喜欢盲目追逐新技术，不深入了解类似技术的本质。</li>
-<li>喜欢闭门造车，不了解业界成熟的内容本质，不会多维度比较。</li>
-<li>喜欢看“垃圾博客”（这里特指 CSDN 上的大部分博客），而不是看书了解技术。</li>
-<li><strong>对别人产生严重依赖</strong>。例子：连 SQL 的关键字 AFTER 也要去问别人得到答案，而不是自己搜索。</li>
-<li>工作能力很差，但总喜欢教别人工作之外的事情（例如 “做人” 的那些 “大道理”）。</li>
-<li>思维固化，不听取他人意见，只会反对（无理无据，没有拿出实际论证的内容那种）。</li>
-<li>在没有完全掌握或了解的情况下，擅自使用 “新技术”。例如在没有完全掌握多线程和函数式编程的情况下，喜欢 &quot;滥用&quot; 多线程、函数式编程。我说的掌握，前提是看过相应的书籍，例如《 Java 8 实战》、《函数式编程》、《 Java 并发编程实战》这些书籍，并且真正理解其中的内容。在不了解 Kafka Streams 的情况下，直接引入对应的 Spring Cloud Stream 进行新项目的开发，从而引入天坑。</li>
-<li><strong>碎片化工作</strong>。上班一半以上时间都是在刷手机摸鱼，没有完整的大段的<strong>深度工作</strong>的时间，把工作时间碎片化了。</li>
-<li><strong>喜欢将 5 天的事情，拖到 6 天 “做完”</strong>。当然，这里和公司也有关系，垃圾公司是比较喜欢 996，大小周，以为能多压榨下员工。</li>
-<li>从不看计算机操作系统的相关内容。</li>
-<li><strong>喜欢过度设计</strong>。这个 “过度”，仁者见仁，智者见智，分不同场景下有不同的解释。</li>
-<li>引用别人的内容，从不标注出处。</li>
-<li>融入世俗, 没有享受过用编程进行创造 or 自我表达的快乐<br>
-来自https://www.v2ex.com/t/801228</li>
-</ol>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[With great power comes great responsibility]]></title>
@@ -480,30 +417,6 @@ print('total key', i,' -&gt; del ',s)
         <link href="https://wuyadi.github.io/post/with-great-power-comes-great-responsibility/">
         </link>
         <updated>2021-08-30T03:30:22.000Z</updated>
-        <content type="html"><![CDATA[<p>蜘蛛侠的叔叔曾经说过：能力越大，责任越大。</p>
-<p>以我国是按劳分配为大前提，</p>
-<p>则推导出：赚钱越多，劳动越多。</p>
-<p>而大家都是每天只有 24 小时的人，能劳动越多，说明能力越大。</p>
-<p>即推导出：赚的越多，责任越大。</p>
-<p>比如年轻人月收入一万，已经算不错的了吧，按 21.75 工作日算，日薪 460 元。</p>
-<p>某明星一天 208 万，相当于 4521 个年轻人的能力和责任。</p>
-<p>也就是说，只要某明星不躺平，即使有 4521 名年轻人躺平，也不影响国家发展。</p>
-<p>新东方有三四万名员工，只需要雇佣七八个不躺平版本某明星，就足够了。</p>
-<p>如果按资产算，俞敏洪身家 280 亿左右，一个普通的九五后资产就按 10 万算好了，俞敏洪的责任相当于 28 万人，相当于一个小县城，我们称为县级责任人。</p>
-<p>马云责任相当于四百多万人的责任，一个二线城市了，我们称为市级二品责任人。</p>
-<p>当然，相当于一线城市的市级一品责任人国内还没出现，但是贝佐斯、马斯克、比尔盖茨这些国外高手，已经达到了市级准一品境界。</p>
-<p>中国九五后大概 1.5 亿，也就是说，哪怕全都躺平，你们只要找到三四十个马云，或者五六百个俞敏洪，国家也有未来。</p>
-<p>当然，那肯定是不好找的，但是各个级别的高手凑一凑，大概率够的。</p>
-<p>薇娅之前进入了财富榜五百强，90 亿，差不多区域范围百强镇级别了吧，堪堪守门员。也就是说，这个级别的，上面还有将近五百个，那这个之下呢，像某明星这样村级高手，应该不少的。毕竟像王健林这样的市级三品高手，随手一个小目标就能击败中下等村级了。</p>
-<p>所以各位村级乡级镇级县级市级五品四品三品二品的人呀，只要你们不躺平，国家就有希望。争取早日出现比肩国外准一品境界的高手，甚至真正的市级一品，省级，国级，行星级，恒星级，宇宙级，不朽级，永恒级。</p>
-<p>你们的目标是星辰大海，不要往下看那些躺平的年轻人，你们对待年轻人躺平的态度应该像真正的高手那样：“哼，蝼蚁”。</p>
-<p>学学当年的斗帝萧炎，力争上游，勇攀高峰，不畏艰险，排除万难，从街道级别的斗者起步，三十年河东，三十年河西，莫欺中老年不够富。</p>
-<p>学学 RPG 里的勇者，一个级别一个级别的升级，连续突破了七八十级，最终的目标也是大魔王和大魔王背后的大大魔王，而不是整天盯着村里的史莱姆（隔壁那个变成魔王的史莱姆不算）。</p>
-<p>学学左晖，尽管已经突破成为了县级高手，依然还想突破，虽然最终陨落，但他勇敢的心值得你们向往。</p>
-<p>资本无限的持续增长本就是逆天而行，凶险无比，但是你们不怕。</p>
-<p>要向上看，向远看，不要看这些躺平的蝼蚁，他们不及你们的十万百万分之一。</p>
-<p>加油吧，资本人。</p>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[代码规范原则]]></title>
@@ -511,48 +424,6 @@ print('total key', i,' -&gt; del ',s)
         <link href="https://wuyadi.github.io/post/dai-ma-gui-fan-yuan-ze/">
         </link>
         <updated>2021-06-17T08:57:28.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="keep-it-simple-and-stupid-原则">Keep it Simple and Stupid 原则</h3>
-<ul>
-<li>
-<p>在设计、制造当中以简约、简单为标准。因为简约、简单，才易于生产，易于维护，更易于操作</p>
-</li>
-<li>
-<p>要谦虚，不要认为自己是个天才</p>
-</li>
-<li>
-<p>将你的任务分解为4-12小时的子任务。</p>
-</li>
-<li>
-<p>把你的问题拆分成多个小问题。每个问题用一个或者很少的几个类来解决掉。</p>
-</li>
-<li>
-<p>保持你的方法足够小，每个方法永远不要超过30-40行代码。每个方法都应该只处理一个小小的问题，不要搞太多uses case进去。</p>
-</li>
-<li>
-<p>让你的类也小点，原则和上面的方法是一样的。</p>
-</li>
-<li>
-<p>先解决问题，然后开始编码。不要一边编码，一边解决问题。这样做也没什么错，但你有能力提前把事情切分成多个小的块，然后开始编码可能是比较好的。另外行数还不是为了衡量质量的标准，只是有个基本的尺子而已。</p>
-</li>
-<li>
-<p>不要害怕干掉代码。重构和重做是两个非常重要的方面。</p>
-</li>
-</ul>
-<h3 id="dry原则">DRY原则</h3>
-<p>Don't Repeat Yourself</p>
-<h3 id="组合原则">组合原则</h3>
-<p>设计时考虑拼接组合</p>
-<h3 id="通俗原则">通俗原则</h3>
-<p>接口设计避免标新立异</p>
-<h3 id="吝啬原则">吝啬原则</h3>
-<p>除非确无它法, 不要编写庞大的程序</p>
-<h3 id="透明性原则">透明性原则</h3>
-<p>设计要可见，以便审查和调试</p>
-<h3 id="补救原则">补救原则</h3>
-<p>出现异常时，马上退出并给出足够错误信息</p>
-<h3 id="缄默原则">缄默原则</h3>
-<p>如果一个程序没什么好说的，就沉默</p>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[关于高级程序员的思考(ˇˍˇ)]]></title>
@@ -560,42 +431,6 @@ print('total key', i,' -&gt; del ',s)
         <link href="https://wuyadi.github.io/post/guan-yu-gao-ji-cheng-xu-yuan-de-si-kao-v_v/">
         </link>
         <updated>2021-03-12T12:13:46.000Z</updated>
-        <content type="html"><![CDATA[<p>这周面试了一个工作了11年的前辈，整个面试过程情绪波动比较大，感触良多。</p>
-<h5 id="以下是面试老哥的部分简历">以下是面试老哥的部分简历：</h5>
-<figure data-type="image" tabindex="1"><img src="https://wuyadi.github.io/post-images/1615553244155.png" alt="" loading="lazy"></figure>
-<p>刚开始面试的时候我是有点虚的，毕竟眼前的这位可能是一个大佬。但是随着交流我发现事情并不简单。</p>
-<ol>
-<li>
-<p>后端知识点：jvm的相关知识点答得含糊其辞，对于内存回收也没有说到点。他解释说最近两年都在做架构工作，java基础功有点拉下了。</p>
-</li>
-<li>
-<p>数据库：</p>
-<p>我：对于</p>
-<pre><code class="language-mysql">select * from users where created_at&gt;&quot;20190802&quot; and phone like &quot;1820222%&quot; order by uid desc limit 10;
-/*
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uid` (`uid`) USING BTREE,
-  KEY `created_at` (`created_at`,`phone`) USING BTREE
-*/
-</code></pre>
-<p>这个查询语句，你怎么进行优化？</p>
-<p>老哥：首先这个*是不对的，要根据业务需要进行获取。<br>
-（长达五分钟的沉默）<br>
-老哥：这边排序为什么不用id？<br>
-老哥：这边uid排序确实没有id快，你能简单说明下它为什么要用id吗？快的原因是什么？<br>
-可惜我最后还是没有听到回表啊，索引的实现原理啊。这让我对他专研技术的描述产生了怀疑。</p>
-</li>
-<li>
-<p>前端：</p>
-<p>问：请问你前端主要使用的什么框架？</p>
-<p>答：主要使用Jquery和layui 做一些后台系统。</p>
-<p>我终于可以确定：这是一个老 crud boy。</p>
-<p>仔细看了下他的简历发现，最近的一份工作是半年前。人到中年的程序员啊，怎么才能保持自己的核心竞争力呢？高级程序员，和中级的区别又在哪里呢？被迫转岗难道就是唯一的出路吗？</p>
-<p>我认为高级程序员，高在经验，在看问题的广度，更在技术的深度。<br>
-程序员的安身立命之本永远是技术。</p>
-</li>
-</ol>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[做面试官一周有感]]></title>
@@ -603,17 +438,6 @@ print('total key', i,' -&gt; del ',s)
         <link href="https://wuyadi.github.io/post/zuo-mian-shi-guan-yi-zhou-you-gan/">
         </link>
         <updated>2020-09-18T12:47:26.000Z</updated>
-        <content type="html"><![CDATA[<p>因为公司在996之后，任务量还是没有完全的消化。领导决定给我们组添加两个同事儿，然后让我作为初面面试官。然后我开始了诚惶诚恐的面试官体验。</p>
-<p>首先是简历的筛选，真的是五味杂陈。</p>
-<ul>
-<li>有的同学写了很多公司的项目，但是通篇都是业务的内容，没有体现自己在团队中的作用，没有表达出自己做了什么；</li>
-<li>有的同学写了很多技术栈，但是问起来又没有实战经验和技能；</li>
-<li>有的同学字体选的偏小，看起来很累。</li>
-</ul>
-<p>再次是面试的感觉，在面试的过程中，我喜欢让面试者分享工作中做的有意思，有激情的事情。在这一周多的面试中没有一个面试小伙儿可以分享一个有意思的故事，大多小伙的表情是迷茫的，然后说每天都在做业务。做业务很正常，但是没有积累和沉淀，反思就有点差劲了。</p>
-<p>最后有很多phper对于代码，对于作品没有追求的程序员是没有追求的，这样无疑很可怕，他产出的代码估计后期需要更多的同事去维护。</p>
-<h5 id="以人为鉴可以知得失-争取在以后的工作和生活中不要犯以上的这种错误小错误啊">以人为鉴,可以知得失。争取在以后的工作和生活中不要犯以上的这种错误，小错误啊。</h5>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[php导出最终章]]></title>
@@ -621,68 +445,6 @@ print('total key', i,' -&gt; del ',s)
         <link href="https://wuyadi.github.io/post/php-dao-chu-zui-zhong-zhang/">
         </link>
         <updated>2020-09-11T13:33:21.000Z</updated>
-        <content type="html"><![CDATA[<p>产品新上了一个标注平台，主要功能是，标注asr识别不准的文字，然后重新提交训练提高asr 的识别准确率。然后业务那边提了一个导出错误和正确文本对比的需求，听起来实现很容易，然后业务又说，错误的文本要用颜色标红区分出来。这个听起来也不难，同事小伙儿coding。。。</p>
-<p>问题来了，使用传统的ExcelUtil，代码如下</p>
-<pre><code class="language-php">Excel::create($exportName,function ($excel) use ($execlData,$keyword){
-            $excel-&gt;sheet('score', function ($sheet) use ($execlData,$keyword){
-                $sheet-&gt;rows($execlData);
-                $count = count($execlData);
-                for ($i=1; $i &lt; $count; $i++) {
-                    $line = $i+1;
-                    $objRichText = $this-&gt;dealKeyword($keyword,$execlData[$i][2]);
-                    $sheet-&gt;setCellValue('C'.$line,$objRichText);
-                    $objRichText1 = $this-&gt;dealKeyword($keyword,$execlData[$i][3]);
-                    $sheet-&gt;setCellValue('D'.$line,$objRichText1);
-                    if (isset($execlData[$i-1]) &amp;&amp; $execlData[$i][0] == $execlData[$i-1][0]) {
-                        $sheet-&gt;mergeCells(&quot;A&quot;.($line-1).&quot;:A&quot;.($line));
-                        $sheet-&gt;mergeCells(&quot;B&quot;.($line-1).&quot;:B&quot;.($line));
-                    }
-                    $sheet-&gt;getStyle('A'.$line.':B'.$line)-&gt;getAlignment()-&gt;setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                }
-            });
-        })-&gt;store('xls',$path);
-</code></pre>
-<p>之后导出是可以导出，颜色也可以区分。但是在数据到100左右的时候，导出的excel尾部变成了乱码。在对ExcelUtil的各种参数进行调优和变量重置之后。小伙儿开始求助于我们，最终认定ExcelUtil不能实现这个需求。</p>
-<p>然后在google的时候发现python可以导出来</p>
-<pre><code class="language-python">from xlsxwriter.workbook import Workbook
-import re
-
-
-workbook = Workbook('a.xlsx')
-worksheet = workbook.add_worksheet()
-color = workbook.add_format({'color': 'red', 'bold': True})
-
-
-rc = re.compile('([0-9年月日]{2,})')
-sentence = '2020年月12日母校初见。1月26日长烟落日孤城闭，2月9日神仙眷侣云比心'
-format_ls = rc.split(sentence)
-for i in range(len(format_ls)-1, -1, -1):
-    if rc.fullmatch(format_ls[i]):
-        format_ls.insert(i, color)  # Prefix the word with the format
-print(format_ls)
-
-row, col = 2, 1
-worksheet.write_rich_string(row, col, *format_ls)
-workbook.close()
-</code></pre>
-<p>所以我们依葫芦画瓢，同样用xlsxwriter实现这个功能不就好了么。</p>
-<p>然后发现[xlsxwriter]: https://github.com/mk-j/PHP_XLSXWriter</p>
-<p>并没有write_rich_string这个方法。oops，这可不太妙。没有轮子就自己造轮子。<br>
-通过阅读XLSXWriter的源码。复写了writeCell方法，在方法中新增逻辑如下：</p>
-<pre><code class="language-php">$cell_name = self::xlsCell($row_number, $column_number);
-		if (is_array($value) &amp;&amp; isset($value[0]['style']['color'])) {
-			$str = &quot;&quot;;
-			foreach ($value as $key =&gt; $val) {
-				if(isset($val['style']['color'])){
-					$str  = $str.'&lt;r&gt;&lt;rPr&gt;&lt;color rgb=&quot;'.$val['style']['color'].'&quot;/&gt;&lt;/rPr&gt;&lt;t&gt;'.$val['text'].'&lt;/t&gt;&lt;/r&gt;';
-				}
-			}
-			$file-&gt;write('&lt;c r=&quot;'.$cell_name.'&quot; s=&quot;'.$cell_style_idx.'&quot; t=&quot;inlineStr&quot;&gt;&lt;is&gt;'.$str.'&lt;/is&gt; &lt;/c&gt;');
-			return ;
-		}
-</code></pre>
-<p>代码完美运行。</p>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[奇怪的bug]]></title>
@@ -690,29 +452,6 @@ workbook.close()
         <link href="https://wuyadi.github.io/post/qi-guai-de-bug/">
         </link>
         <updated>2020-07-23T06:43:58.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="前情">前情：</h3>
-<p>在更新了一个数据权限的模块之后，测试同学说有个权限的bug。在检查代码后，发现了罪魁祸首。</p>
-<h3 id="开始">开始：</h3>
-<pre><code class="language-php"> $keys = ['callerNum','calleeNum','agentName','agentID','customer_name','phone','ID_number','birth'];
-        $phoneKeys = ['callerNum','calleeNum','phone'];
-        $ID_numbers = ['ID_number'];
-        $leftKeys = ['birth'];
-        foreach ($data as $key =&gt; $value) {
-            if(is_array($value)){
-                $data[$key] = $this-&gt;withAllSecret($value);
-            }else{
-                if($key &amp;&amp; in_array($key,$keys)){
-</code></pre>
-<h3 id="分析">分析：</h3>
-<p>在[官网]: https://www.php.net/manual/zh/function.in-array.php</p>
-<p>对于in_array这个方法的解释为：in_array — 检查数组中是否存在某个值</p>
-<pre><code class="language-php">in_array ( mixed $needle , array $haystack , bool $strict = false ) : bool
-</code></pre>
-<p>所以in_array()函数的value值会与搜索的值比较，如果不加第三个参数，in_array()会把搜索的类型强制转换成和value值一样进行比较。</p>
-<p>所以，上面的搜索值 为‘h232’ 在和value = 0 进行比较的时候 ‘h234’强制转换成了number 0</p>
-<h3 id="结论">结论：</h3>
-<p>在使用in_array方法时，尽量使用第三个参数，避免因为类型转换，导致程序走向歧途。</p>
-]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[从PHP到GO之导出数据]]></title>
@@ -720,48 +459,5 @@ workbook.close()
         <link href="https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/">
         </link>
         <updated>2020-03-25T12:57:13.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="前情">前情：</h3>
-<p>生产环境有客户经常从ES中导出不同时段的数据，一天数据大概有12W，现有的php导出速度在优化之后一次导出耗时需要27-35分钟，所以有了这次优化。</p>
-<h3 id="开始">开始：</h3>
-<h4 id="hbase-es">HBASE + ES</h4>
-<p>因为现在的主要耗时在于从es获取数据时的耗时比较久，首先尝试了，将相对大的数据字段存储到HBASE，然后每次查询都从es获取ID，再从HBASE获取文本的数据。经测试从ES + HBASE比单纯ES快，但是效果不显著，还是不能满足客户需要。</p>
-<h4 id="从php到golang">从PHP到Golang</h4>
-<p>在改造了存储结构没有好的结果的时候，从头理了一下整个流程。发现因为语言的限制php每次只有一个并发从ES取数据，那么我们使用高并发的语言GO来并发的从ES拿数据，速度应该会提升不少。选中了常用的go-for-es插件olivere/elastic.v5 。</p>
-<p>首先我们再main里面以10个<em>go</em>routine从ES拿数据。</p>
-<pre><code class="language-go">    count := 10
-	ch := make(chan bool, count)
-	for i := 0; i &lt; count; i++ {
-		go queryEs(ch, i)
-	}
-	for i := 0; i &lt; count; i++ {
-		&lt;-ch
-	}
-    sliceQuery := NewSliceQuery().Id(i).Max(10)
-	boolQ := elastic.NewBoolQuery()
-	boolQ.Must(elastic.NewMatchQuery(&quot;ai_status&quot;, 3))
-	boolQ.Filter(elastic.NewRangeQuery(&quot;create_time&quot;).Gt(1583337600))
-	boolQ.Filter(elastic.NewRangeQuery(&quot;create_time&quot;).Lt(1585151999))
-	svc := client.Scroll(&quot;index&quot;).Query(boolQ).Slice(sliceQuery).Size(800)
-</code></pre>
-<p>然后就是对数据的处理：</p>
-<pre><code class="language-go">    result, err := svc.Do(context.TODO())
-		if err == io.EOF {
-			break
-		}
-
-		if err != nil {
-			//fmt.Printf(err)
-			break
-		}
-
-		for _, r := range result.Hits.Hits {
-			jsonstring := *r.Source
-			var source Source
-			err = json.Unmarshal(jsonstring, &amp;source)
-</code></pre>
-<p>经测试导出数据20W条数据只需要10分钟</p>
-<h3 id="结论">结论：</h3>
-<p>在觉得做到的最优解的时候，换个思路，跳出僵化思维，或许会有意外的收获。</p>
-]]></content>
     </entry>
 </feed>
