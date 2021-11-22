@@ -1,363 +1,545 @@
-<!DOCTYPE html>
+
 <html>
-  <head>
-    <meta charset="utf-8" >
-
-<title>文章归档 | 一个兴趣使然的程序员</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico?v=1637583901704">
-<link rel="stylesheet" href="https://wuyadi.github.io/styles/main.css">
-
-
-
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
-
-
-    <meta name="description" content="知耻近乎勇">
-  </head>
-  <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://wuyadi.github.io">
-        <img src="https://wuyadi.github.io/images/avatar.png?v=1637583901704" class="site-logo">
-        <h1 class="site-title">一个兴趣使然的程序员</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
-    </div>
-    <div>
-      
-        
-          <a href="/" class="site-nav">
-            首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="site-nav">
-            归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="site-nav">
-            标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="site-nav">
-            关于
-          </a>
-        
-      
-    </div>
-  </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      知耻近乎勇
-    </div>
-    <div class="site-footer">
-       | <a class="rss" href="https://wuyadi.github.io/atom.xml" target="_blank">RSS</a>
-    </div>
-  </div>
-</div>
-
-
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          
-
-          <h2 class="archives-title">文章归档</h2>
-          <div class="archives-container">
-            
-              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2021</h2>
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/yong-python-jiao-ben-shan-chu-wu-xiao-redis-key/">
-                      <h2 class="post-title">
-                        用python脚本删除无效redis key
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/chen-nian-xi-lesslessshuang-yu-tong-jing-greatergreater/">
-                      <h2 class="post-title">
-                        陈年喜 ·《双鱼铜镜》
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/di-xiao-neng-cheng-xu-yuan-de-xing-wei-yu-si-wei-gong-mian/">
-                      <h2 class="post-title">
-                        低效能程序员的行为与思维，共勉
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/with-great-power-comes-great-responsibility/">
-                      <h2 class="post-title">
-                        With great power comes great responsibility
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/dai-ma-gui-fan-yuan-ze/">
-                      <h2 class="post-title">
-                        代码规范原则
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/guan-yu-gao-ji-cheng-xu-yuan-de-si-kao-v_v/">
-                      <h2 class="post-title">
-                        关于高级程序员的思考(ˇˍˇ)
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-            
-              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2020</h2>
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/zuo-mian-shi-guan-yi-zhou-you-gan/">
-                      <h2 class="post-title">
-                        做面试官一周有感
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/php-dao-chu-zui-zhong-zhang/">
-                      <h2 class="post-title">
-                        php导出最终章
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/qi-guai-de-bug/">
-                      <h2 class="post-title">
-                        奇怪的bug
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/">
-                      <h2 class="post-title">
-                        从PHP到GO之导出数据
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/">
-                      <h2 class="post-title">
-                        phpexcel性能瓶颈及其优化 III
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-              
-                
-              
-                
-              
-            
-              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2019</h2>
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-i/">
-                      <h2 class="post-title">
-                        phpexcel性能瓶颈及其优化 II
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/">
-                      <h2 class="post-title">
-                        phpexcel性能瓶颈及其优化 I
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-              
-            
-              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2018</h2>
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-              
-                
-                  <article class="post">
-                    <a href="https://wuyadi.github.io/post/chou-xiang-lei-jie-kou-de-ding-yi-qu-bie-he-shi-yong-chang-jing/">
-                      <h2 class="post-title">
-                        抽象类、接口的定义、区别和使用场景
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-            
-          </div>
-
-          <div class="pagination-container">
-  
-  
-</div>
-
-        </div>
-      </div>
-    </div>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script type="application/javascript">
-
-AOS.init();
-
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
-
+  <head lang="zh">
+         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <meta name="renderer" content="webkit">
+    <title>一个兴趣使然的程序员</title>
+<link href="https://wuyadi.github.io/styles/main.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="https://wuyadi.github.io/media/scripts/jquery.js"></script>
+<script type="text/javascript" src="https://wuyadi.github.io/media/scripts/basic.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
 
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="logo_title">
+		  
+        <div class="title animated fadeInDown"><img src="https://wuyadi.github.io/images/avatar.png?v=1637584746875"/>
+
+          <h1 title="一个兴趣使然的程序员" class="weaklink"><a href="/">一个兴趣使然的程序员</a>
+
+          </h1>
+
+          <div class="navbar weaklink">
+            <div class="normal_nav">
+
+<div class="bitcron_nav_container">
+
+
+  <div class="bitcron_nav">
+    <div class="mixed_site_nav_wrap site_nav_wrap">
+		
+      <ul class="mixed_site_nav site_nav sm sm-base">
+ 
+  <li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a>
+
+  </li>
+ 
+  <li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a>
+
+  </li>
+ 
+  <li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a>
+
+  </li>
+ 
+  <li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a>
+
+  </li>
+ 
+
+      </ul>
+
+      <div class="clear clear_nav_inline_end"></div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="clear clear_nav_end"></div>
+
+</div>
+
+            </div>
+
+            <div class="hamberger"><i class="fa fa-bars"></i>
+<i class="fa fa-times"></i>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="hidden_nav animated fadeInDown">
+
+<div class="bitcron_nav_container">
+
+
+  <div class="bitcron_nav">
+    <div class="mixed_site_nav_wrap site_nav_wrap">
+      <ul class="mixed_site_nav site_nav sm sm-base">
+		  
+	
+  <li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a>
+
+  </li>
+
+
+  <li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a>
+
+  </li>
+
+
+  <li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a>
+
+  </li>
+
+
+  <li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a>
+
+  </li>
 
 
 
 
 
-  </body>
+      </ul>
+
+      <div class="clear clear_nav_inline_end"></div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="clear clear_nav_end"></div>
+
+</div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="main">
+      <div class="main-inner">
+
+
+<div class="content">
+	
+	
+  <div class="list_with_title">
+
+    <div class="listing_title">2021</div>
+
+	  
+    <div class="listing">
+      <div class="listing-item">
+		  
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/yong-python-jiao-ben-shan-chu-wu-xiao-redis-key/"  title="用python脚本删除无效redis key" >用python脚本删除无效redis key</a>
+
+          <div class="post_date"><span class="date">2021-11-22</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/chen-nian-xi-lesslessshuang-yu-tong-jing-greatergreater/"  title="陈年喜 ·《双鱼铜镜》" >陈年喜 ·《双鱼铜镜》</a>
+
+          <div class="post_date"><span class="date">2021-09-16</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/di-xiao-neng-cheng-xu-yuan-de-xing-wei-yu-si-wei-gong-mian/"  title="低效能程序员的行为与思维，共勉" >低效能程序员的行为与思维，共勉</a>
+
+          <div class="post_date"><span class="date">2021-09-11</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/with-great-power-comes-great-responsibility/"  title="With great power comes great responsibility" >With great power comes great responsibility</a>
+
+          <div class="post_date"><span class="date">2021-08-30</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/dai-ma-gui-fan-yuan-ze/"  title="代码规范原则" >代码规范原则</a>
+
+          <div class="post_date"><span class="date">2021-06-17</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/guan-yu-gao-ji-cheng-xu-yuan-de-si-kao-v_v/"  title="关于高级程序员的思考(ˇˍˇ)" >关于高级程序员的思考(ˇˍˇ)</a>
+
+          <div class="post_date"><span class="date">2021-03-12</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+      </div>
+
+
+		
+		
+		
+    </div>
+
+
+  </div>
+
+  <div class="list_with_title">
+
+    <div class="listing_title">2020</div>
+
+	  
+    <div class="listing">
+      <div class="listing-item">
+		  
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/zuo-mian-shi-guan-yi-zhou-you-gan/"  title="做面试官一周有感" >做面试官一周有感</a>
+
+          <div class="post_date"><span class="date">2020-09-18</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/php-dao-chu-zui-zhong-zhang/"  title="php导出最终章" >php导出最终章</a>
+
+          <div class="post_date"><span class="date">2020-09-11</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/qi-guai-de-bug/"  title="奇怪的bug" >奇怪的bug</a>
+
+          <div class="post_date"><span class="date">2020-07-23</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/"  title="从PHP到GO之导出数据" >从PHP到GO之导出数据</a>
+
+          <div class="post_date"><span class="date">2020-03-25</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/"  title="phpexcel性能瓶颈及其优化 III" >phpexcel性能瓶颈及其优化 III</a>
+
+          <div class="post_date"><span class="date">2020-03-22</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+      </div>
+
+
+		
+		
+		
+    </div>
+
+
+  </div>
+
+  <div class="list_with_title">
+
+    <div class="listing_title">2019</div>
+
+	  
+    <div class="listing">
+      <div class="listing-item">
+		  
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-i/"  title="phpexcel性能瓶颈及其优化 II" >phpexcel性能瓶颈及其优化 II</a>
+
+          <div class="post_date"><span class="date">2019-07-11</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua/"  title="phpexcel性能瓶颈及其优化 I" >phpexcel性能瓶颈及其优化 I</a>
+
+          <div class="post_date"><span class="date">2019-02-02</span>
+
+          </div>
+
+        </div>
+ 
+                            
+                                
+                            
+      </div>
+
+
+		
+		
+		
+    </div>
+
+
+  </div>
+
+  <div class="list_with_title">
+
+    <div class="listing_title">2018</div>
+
+	  
+    <div class="listing">
+      <div class="listing-item">
+		  
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+        <div class="listing_post"><a href="https://wuyadi.github.io/post/chou-xiang-lei-jie-kou-de-ding-yi-qu-bie-he-shi-yong-chang-jing/"  title="抽象类、接口的定义、区别和使用场景" >抽象类、接口的定义、区别和使用场景</a>
+
+          <div class="post_date"><span class="date">2018-09-09</span>
+
+          </div>
+
+        </div>
+ 
+                            
+      </div>
+
+
+		
+		
+		
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+      </div>
+
+    </div>
+   <div class="footer">
+<link href="https://wuyadi.github.io/styles/main.css" type="text/css" rel="stylesheet"/><div class="site_footer_wrap"><div class="site_footer">
+
+      <div class="mysocials"><div class="my_socials">
+		   
+			   
+    
+			   
+    
+			   
+    
+			   
+    
+</div><link href="https://wuyadi.github.io/styles/main.css" type="text/css" rel="stylesheet"/>
+
+      </div>
+
+      <div class="copyright">
+      </div>
+
+</div></div>
+
+    </div>
+
+
+<style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+
+a.back_to_top span {
+    color: #888;
+}
+
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+
+a.back_to_top:hover span {
+    color: #555;
+}
+
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+
+
+
+</style><a id="back_to_top" href="#" class="back_to_top"><span>△</span>
+</a>
+<script type="text/javascript" src="https://wuyadi.github.io/media/scripts/jquery.js"></script>
+
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
+
+ 
+</body>
+
 </html>
