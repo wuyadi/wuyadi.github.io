@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>一个兴趣使然的程序员</title>
-    <updated>2021-11-25T03:44:42.116Z</updated>
+    <updated>2021-12-16T01:35:36.249Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
@@ -10,6 +10,69 @@
     <logo>https://wuyadi.github.io/images/avatar.png</logo>
     <icon>https://wuyadi.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 一个兴趣使然的程序员</rights>
+    <entry>
+        <title type="html"><![CDATA[Older]]></title>
+        <id>https://wuyadi.github.io/post/older/</id>
+        <link href="https://wuyadi.github.io/post/older/">
+        </link>
+        <updated>2021-12-16T01:32:18.000Z</updated>
+        <summary type="html"><![CDATA[<p>I used to shut my door while my mother screamed in the kitchen<br>
+I'd turn the music up, get high and try not to listen<br>
+To every little fight, 'cause neither one was right</p>
+<p>I swore I'd never be like them<br>
+But I was just a kid back then</p>
+<p>The older I get the more that I see<br>
+My parents aren't heroes, they're just like me<br>
+And loving is hard, it don't always work<br>
+You just try your best not to get hurt<br>
+I used to be mad but now I know<br>
+Sometimes it's better to let someone go<br>
+It just hadn't hit me yet<br>
+The older I get</p>
+<p>I used to wonder why, why they could never be happy<br>
+I used to close my eyes and pray for a whole 'nother family<br>
+Where everything was fine, one that felt like mine</p>
+<p>I swore I'd never be like them<br>
+But I was just a kid back then</p>
+<p>The older I get the more that I see<br>
+My parents aren't heroes, they're just like me<br>
+And loving is hard, it don't always work<br>
+You just try your best not to get hurt<br>
+I used to be mad but now I know<br>
+Sometimes it's better to let someone go<br>
+It just hadn't hit me yet<br>
+The older I get</p>
+<p>The older I get the more that I see</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>I used to shut my door while my mother screamed in the kitchen<br>
+I'd turn the music up, get high and try not to listen<br>
+To every little fight, 'cause neither one was right</p>
+<p>I swore I'd never be like them<br>
+But I was just a kid back then</p>
+<p>The older I get the more that I see<br>
+My parents aren't heroes, they're just like me<br>
+And loving is hard, it don't always work<br>
+You just try your best not to get hurt<br>
+I used to be mad but now I know<br>
+Sometimes it's better to let someone go<br>
+It just hadn't hit me yet<br>
+The older I get</p>
+<p>I used to wonder why, why they could never be happy<br>
+I used to close my eyes and pray for a whole 'nother family<br>
+Where everything was fine, one that felt like mine</p>
+<p>I swore I'd never be like them<br>
+But I was just a kid back then</p>
+<p>The older I get the more that I see<br>
+My parents aren't heroes, they're just like me<br>
+And loving is hard, it don't always work<br>
+You just try your best not to get hurt<br>
+I used to be mad but now I know<br>
+Sometimes it's better to let someone go<br>
+It just hadn't hit me yet<br>
+The older I get</p>
+<p>The older I get the more that I see</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[用python脚本删除无效redis key]]></title>
         <id>https://wuyadi.github.io/post/yong-python-jiao-ben-shan-chu-wu-xiao-redis-key/</id>
@@ -452,12 +515,5 @@ print('total key', i,' -&gt; del ',s)
         <link href="https://wuyadi.github.io/post/qi-guai-de-bug/">
         </link>
         <updated>2020-07-23T06:43:58.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[从PHP到GO之导出数据]]></title>
-        <id>https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/</id>
-        <link href="https://wuyadi.github.io/post/cong-php-dao-go-zhi-dao-chu-shu-ju/">
-        </link>
-        <updated>2020-03-25T12:57:13.000Z</updated>
     </entry>
 </feed>
