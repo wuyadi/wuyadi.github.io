@@ -2,14 +2,21 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wuyadi.github.io</id>
     <title>一个兴趣使然的程序员</title>
-    <updated>2021-12-16T01:43:09.283Z</updated>
+    <updated>2022-01-03T05:04:14.051Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wuyadi.github.io"/>
     <link rel="self" href="https://wuyadi.github.io/atom.xml"/>
     <subtitle>知耻近乎勇</subtitle>
     <logo>https://wuyadi.github.io/images/avatar.png</logo>
     <icon>https://wuyadi.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, 一个兴趣使然的程序员</rights>
+    <rights>All rights reserved 2022, 一个兴趣使然的程序员</rights>
+    <entry>
+        <title type="html"><![CDATA[2021年终总结]]></title>
+        <id>https://wuyadi.github.io/post/2021-nian-zhong-zong-jie/</id>
+        <link href="https://wuyadi.github.io/post/2021-nian-zhong-zong-jie/">
+        </link>
+        <updated>2022-01-03T04:59:31.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Older]]></title>
         <id>https://wuyadi.github.io/post/older/</id>
@@ -508,12 +515,5 @@ print('total key', i,' -&gt; del ',s)
         <link href="https://wuyadi.github.io/post/php-dao-chu-zui-zhong-zhang/">
         </link>
         <updated>2020-09-11T13:33:21.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[奇怪的bug]]></title>
-        <id>https://wuyadi.github.io/post/qi-guai-de-bug/</id>
-        <link href="https://wuyadi.github.io/post/qi-guai-de-bug/">
-        </link>
-        <updated>2020-07-23T06:43:58.000Z</updated>
     </entry>
 </feed>
