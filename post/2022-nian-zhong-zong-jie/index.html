@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="知耻近乎勇"><meta charset="UTF-8"><title>phpexcel性能瓶颈及其优化 III | 一个兴趣使然的程序员</title>
+<link rel="shortcut icon" href="https://wuyadi.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="知耻近乎勇"><meta charset="UTF-8"><title>2022年终总结 | 一个兴趣使然的程序员</title>
 <link href="https://wuyadi.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://wuyadi.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
 <script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
 
-<link rel="canonical" href="https://wuyadi.github.io/post/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii/" />
+<link rel="canonical" href="https://wuyadi.github.io/post/2022-nian-zhong-zong-jie/" />
 </head>
 <body>
 <div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
@@ -29,26 +29,41 @@
 
 <div class="main"><div class="main-inner"><div class="content">
 <article class="post">
-<h2 class="post_title sm_margin"><a>phpexcel性能瓶颈及其优化 III</a></h2>
+<h2 class="post_title sm_margin"><a>2022年终总结</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
-<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-03-22</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://wuyadi.github.io/tag/Cgj5zKr2Y/" class="tag">XLSXWriter</a> | 	<a href="https://wuyadi.github.io/tag/vgdkEtpzM8/" class="tag">excel</a> | 	<a href="https://wuyadi.github.io/tag/3WTMsKTgK/" class="tag">php</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">222字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">1 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2023-01-05</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px"></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">727字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">3 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
 </section>
-
-<img class="featureImg" alt="featureimg" src="https://wuyadi.github.io/post-images/phpexcel-xing-neng-ping-jing-ji-qi-you-hua-ii.png" referrerpolicy="no-referrer">
 
 <div style="display:flex">
 <div class="md_block" id="md_block">
 <div class="round-shape-one"></div>
-<h3 id="前情">前情：</h3>
-<p>再回头复查的时候，发现我始终局限于使用ExcelUtil或者 <a href="https://phpspreadsheet.readthedocs.io/">PhpSpreadsheet</a> ，我们就算分批取数据，但是excel本身的内存占用还是会累积，一个100W数据的导出，还是会引起服务器的内存溢出。</p>
-<h3 id="开始">开始：</h3>
-<p>有网友推荐使用</p>
-<p>，有介绍说：<strong>Never run out of memory with PHPExcel again.</strong></p>
-<p>替换后，查看服务器资源占用，没有看到内存持续增长。</p>
-<h3 id="分析">分析：</h3>
-<p>XLSXWriter不是一直保存一个对象来进行增删改查，而是通过增量写文件的方式来进行excel的导出。所以不会随着导出的数据量增长，而占用更多的内存。</p>
-<h3 id="结论">结论：</h3>
-<p>在使用XLSXWriter替换导出组件之后，系统的导出时长完全受限于从数据库读取数据。这块就要从数据查询语句优化做起。</p>
+<h2 id="疫情对普通人的影响">疫情对普通人的影响</h2>
+<h3 id="核酸检测">核酸检测</h3>
+<p>根据疫情波动2天一次核酸到8-9月份每天一次核酸，应该做了100次核酸以上。真喉咙起茧，可惜最后还是奥密克戎大人获得了胜利，全国放开。</p>
+<h3 id="阳">阳</h3>
+<p>在12.16就感觉浑身不得劲，18的时候抗原两道杠。症状不重主要是关节疼，咳嗽和晚上睡觉容易出汗。25的时候核酸检测+抗原都是阴的了。但还是一直咳嗽，还在偶尔咳。根据症状感觉22年夏天也有羊，那会儿没有抗原做了是四次核酸都是阴，可能核酸结果也不太准确吧。</p>
+<h2 id="日常">日常</h2>
+<h3 id="做饭">做饭</h3>
+<p>在一声声真好吃中迷失了自我，然后尝试做了很多菜。现在做的牛羊鸡猪肉都还可以，鸭肉不知道是肉本身还是厨艺的问题，有比较大的改进空间。尝试做的烤鱼限于工具的原因，不算成功。用空气炸锅尝试的各种，属于及格水准。在家里自制的烧烤，口味还可以，但是厨房通风不好，算失败。给老家安排了烧烤炉，过年再尝试下。</p>
+<h3 id="房子">房子</h3>
+<p>7月底房子通知收房了。因为疫情影响也没有装修，年后让老婆去装修，也算是有个自己的家。</p>
+<h3 id="做视频">做视频</h3>
+<p>在3-5月份尝试做疫情状态图表视频，因为新闻的高敏感性，未遂。尝试用python脚本根据字幕剪切视频自动拼接，在B站的视频播放量正常一个视频100的播放量。还是要用心做，因为精力的原因逐渐放弃。</p>
+<h3 id="旅游">旅游</h3>
+<p>疫情时代，旅游大不易。</p>
+<p>6月份在合肥出差去了巢湖，<br>
+<img src="https://wuyadi.github.io/post-images/1672913293390.jpg" alt="" loading="lazy"><br>
+国庆的时候和老婆去了佛山，在天海酒家尝试了本地正宗早餐，语言不通体验很差。南风古灶和祖庙的体验还可以。顺路去了广州，极度鄙视深圳来的游客，当天就返回了深圳。节后广州就爆发了疫情一直到彻底解封，有趣。<br>
+<img src="https://wuyadi.github.io/post-images/1672913312369.jpg" alt="" loading="lazy"><br>
+12月份和何轩一起去了豫园。景色秀美但是缺少那种大丈夫当如是也的感觉。</p>
+<h3 id="读书">读书</h3>
+<p>买了两本书 被讨厌的勇气和置身事内，明年争取多读书，多读好书。<br>
+<img src="https://wuyadi.github.io/post-images/1672913306155.jpg" alt="" loading="lazy"></p>
+<h1 id="工作">工作</h1>
+<p>和以往每年的工作节奏基本一致。在六月份的时候达到一年最忙碌的时候，年底又逐渐轻松下来。今年因为工作积极性和质量问题优化了一个兄弟。能力局限于天分和过往经历可能有长有短，但是对待工作的态度可能更重要。<br>
+<img src="https://wuyadi.github.io/post-images/1672913317298.jpg" alt="" loading="lazy"></p>
+<h1 id="总结">总结</h1>
+<p>扛住生活的普通人，明年也要加油！</p>
 
 <span id="footnote"></span>
 <div id = "warn"></div>
@@ -56,16 +71,25 @@
 <div class="toc-container"><ul class="markdownIt-TOC">
 <li>
 <ul>
-<li>
+<li><a href="#%E7%96%AB%E6%83%85%E5%AF%B9%E6%99%AE%E9%80%9A%E4%BA%BA%E7%9A%84%E5%BD%B1%E5%93%8D">疫情对普通人的影响</a>
 <ul>
-<li><a href="#%E5%89%8D%E6%83%85">前情：</a></li>
-<li><a href="#%E5%BC%80%E5%A7%8B">开始：</a></li>
-<li><a href="#%E5%88%86%E6%9E%90">分析：</a></li>
-<li><a href="#%E7%BB%93%E8%AE%BA">结论：</a></li>
+<li><a href="#%E6%A0%B8%E9%85%B8%E6%A3%80%E6%B5%8B">核酸检测</a></li>
+<li><a href="#%E9%98%B3">阳</a></li>
+</ul>
+</li>
+<li><a href="#%E6%97%A5%E5%B8%B8">日常</a>
+<ul>
+<li><a href="#%E5%81%9A%E9%A5%AD">做饭</a></li>
+<li><a href="#%E6%88%BF%E5%AD%90">房子</a></li>
+<li><a href="#%E5%81%9A%E8%A7%86%E9%A2%91">做视频</a></li>
+<li><a href="#%E6%97%85%E6%B8%B8">旅游</a></li>
+<li><a href="#%E8%AF%BB%E4%B9%A6">读书</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a href="#%E5%B7%A5%E4%BD%9C">工作</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
 </ul>
 </div>
 </div>
